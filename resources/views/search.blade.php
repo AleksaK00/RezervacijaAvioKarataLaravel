@@ -16,7 +16,10 @@
         <div class="row mt-3">
             {{--Ispis u slucaju da nisu pronadjeni letovi--}}
             @if(count($pretraga->rezultatNiz) == 0)
-                <p class="display-6 text-center">Nema dostupnih letova između dva tražena grada!</p>
+
+                <div class="col-md-12 p-5 bg-white border border-primary rounded-4">
+                    <p class="display-6 text-center">Nema dostupnih letova između dva tražena grada!</p>
+                </div> 
             @else
 
                 <!-- Kreiranje div-a sa filterima upisanim u podaciZaFilter -->

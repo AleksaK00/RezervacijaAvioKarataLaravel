@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models;
+use App\Models\{RezultatPretrage, PojedinacniRezultat, Aerodrom, Let, AvioKompanija};
 use Illuminate\Database\Eloquent\Model;
 
 class searchController extends Controller
@@ -15,10 +15,10 @@ class searchController extends Controller
         // Nalazenje svih aerodroma u polaznom i dolaznom gradu
         $unosPolazni = $request->input('polazniAerodrom');
         $unosDolazni = $request->input('dolazniAerodrom');
-        $polazniAerodromi = Models\Aerodrom::where('Grad', 'LIKE', '%'.$unosPolazni.'%')->get();
-        $dolazniAerodromi = Models\Aerodrom::where('Grad', 'LIKE', '%'.$unosDolazni.'%')->get();
+        $polazniAerodromi = Aerodrom::where('Grad', 'LIKE', '%'.$unosPolazni.'%')->get();
+        $dolazniAerodromi = Aerodrom::where('Grad', 'LIKE', '%'.$unosDolazni.'%')->get();
 
-        $pretraga = new Models\RezultatPretrage();
+        $pretraga = new RezultatPretrage();
 
         //Trazi letove za sve kombinacije aerodroma, zatim ih stavlja u rezultatNiz
         foreach ($polazniAerodromi as $trenutniPolazni)
@@ -29,14 +29,14 @@ class searchController extends Controller
             {
                 $pretraga->podaciZaFilter['dolazniAerodromi'][] = $trenutniDolazni["Ime"];
 
-                $rezultat = Models\Let::where('Polazni_Aerodrom', 'LIKE', '%'.$trenutniPolazni["ICAO_Kod_Aerodroma"].'%')->where('Dolazni_Aerodrom', 'LIKE', '%'.$trenutniDolazni["ICAO_Kod_Aerodroma"].'%')->get();
+                $rezultat = Let::where('Polazni_Aerodrom', 'LIKE', '%'.$trenutniPolazni["ICAO_Kod_Aerodroma"].'%')->where('Dolazni_Aerodrom', 'LIKE', '%'.$trenutniDolazni["ICAO_Kod_Aerodroma"].'%')->get();
 
                 foreach ($rezultat as $trenutniLet)
                 {
                     //Popunjavanje nove instance klase PojedinacniRezultat
-                    $trenutniRezultat = new Models\PojedinacniRezultat();
+                    $trenutniRezultat = new PojedinacniRezultat();
                     $trenutniRezultat->let = $trenutniLet;
-                    $trenutniRezultat->avioKompanija = Models\AvioKompanija::where('ICAO_Kod', 'LIKE', $trenutniLet['ICAO_Kod'])->first();
+                    $trenutniRezultat->avioKompanija = AvioKompanija::where('ICAO_Kod', 'LIKE', $trenutniLet['ICAO_Kod'])->first();
                     $trenutniRezultat->polazniAerodrom = $trenutniPolazni;
                     $trenutniRezultat->dolazniAerodrom = $trenutniDolazni;
 
