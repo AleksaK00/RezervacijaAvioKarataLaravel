@@ -66,6 +66,31 @@ class AuthenticationController extends Controller
             return redirect('/register')->withErrors('Šifre se ne poklapaju!');
         }
 
-        return view('index');
+        //Provera da li je korisnicko ime i email vec u upotrebi
+        $korisnikIme = Korisnik::where('Korisnicko_Ime', $request->input('username'))->first();
+        $korisnikEmail = Korisnik::where('Email', $request->input('email'))->first();
+        if ($korisnikIme)
+        {
+            return redirect('/register')->withErrors('Korisnik sa unetim korisničkim imenom već postoji!');
+        }
+        if ($korisnikEmail)
+        {
+            return redirect('/register')->withErrors('email je već u upotrebi!');
+        }
+
+        //kreiranje novog korisnickog naloga i ulogovanje
+        $noviKorisnik = Korisnik::create(
+            [
+                'Korisnicko_Ime' => $request->input('username'),
+                'Email' => $request->input('email'),
+                'Sifra' => Hash::make($request->input('password')),
+                'Ime' => $request->input('name'),
+                'Prezime' => $request->input('surname'),
+                'Adresa' => $request->input('adress'),
+                'Administrator' => 0
+        ]);
+        Cookie::queue('korisnik', $noviKorisnik['Korisnicko_Ime'], 10080);
+
+        return redirect('/info/registrationSuccess');
     }
 }

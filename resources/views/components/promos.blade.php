@@ -1,4 +1,4 @@
-﻿<article class="container mt-5 mb-5">
+﻿<article class="container mt-2 mb-5">
 
     <!-- Karusela sa 3 razlicite ponude linija, na klik pretrazuje sve letove promovisane rute -->
     <div class="row justify-content-center">

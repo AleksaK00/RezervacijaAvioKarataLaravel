@@ -6,7 +6,7 @@
     <title>Document</title>
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{'css/stil1.css'}}"  rel="stylesheet">
+    <link href="{{ asset('css/stil1.css') }}"  rel="stylesheet">
 </head>
 <body>
     <main class="container-fluid d-flex flex-column min-vh-100">

@@ -21,3 +21,8 @@ Route::get('/register', function () {
     return view('register');
 });
 Route::post('/register', [AuthenticationController::class, 'register']);
+
+//Rute za jednostavne poruke
+Route::get('/info/registrationSuccess', function(){
+    return view('info.registrationSuccess');
+});
