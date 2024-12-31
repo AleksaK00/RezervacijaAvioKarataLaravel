@@ -4,11 +4,11 @@
     <section class="row justify-content-md-center">
         <div class="mt-4 p-5 bg-primary text-white rounded-4 col-md-3">
             <h2 class="text-center"><b>Registracija</b></h2>
-            <form method="post" action="register.php" name="registrationForm">
+            <form method="post" action="/register" name="registrationForm">
 
                 <div class="mb-3">
                     <label for="usernamePolje" class="form-label">Korisničko ime</label>
-                    <input class="form-control" type="text" id="usernamePolje" name="userName">
+                    <input class="form-control" type="text" id="usernamePolje" name="username">
                 </div>
 
                 <div class="mb-3">
@@ -23,7 +23,7 @@
 
                 <div class="mb-3" id="lozinkaPotvrdaDiv">
                     <label for="lozinkaPotvrdaPolje" class="form-label">Potvrdi Lozinku</label>
-                    <input id="lozinkaPotvrdaPolje" class="form-control" type="password" name="passwordConfirm" oninput="UporediSifru()" onfocus="UporediSifru()">
+                    <input id="lozinkaPotvrdaPolje" class="form-control" type="password" name="password_confirm" oninput="UporediSifru()" onfocus="UporediSifru()">
                 </div>
 
                 <div class="mb-3">
@@ -42,10 +42,16 @@
                 </div>
 
                 <div class="d-grid gap-2 col-6 mx-auto">
+                    @csrf
                     <button type="submit" class="btn btn-primary mb-3" name="registracija">Registruj se</button>
                 </div>
 
                 <!-- Obavestenje o greskama unosa -->
+                @if($errors->any())          
+                    <div class="text-bg-danger text-center mb-2 p-2 rounded-4">
+                         {{ $errors->first() }}
+                    </div>   
+                 @endif
 
             </form>
         </div>

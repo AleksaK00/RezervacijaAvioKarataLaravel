@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{'css/stil1.css'}}">
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{'css/stil1.css'}}"  rel="stylesheet">
 </head>
 <body>
     <main class="container-fluid d-flex flex-column min-vh-100">
@@ -22,33 +22,26 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <?php
+                        {{-- Ispis naloga u slucaju da je ulogovan, opcija za register/log in u slucaju da nije --}}
+                        @if(Request::cookie('korisnik') != '')
 
-                        //Ispis naloga u slucaju da je ulogovan, opcija za register/log in u slucaju da nije
-                        if(isset($_COOKIE["Korisnik"]))
-                        {
-                            ?>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href=""><?php echo $_COOKIE["Korisnik"]; ?></a>
+                                <a class="nav-link" aria-current="page" href="">{{ Request::cookie('korisnik') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/">Odjavite se</a>
+                                <a class="nav-link" href="/logout">Odjavite se</a>
                             </li>
-                            <?php
-                        }
-                        else
-                        {
-                            ?>
+
+                        @else
+
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/login">Prijavite se</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/register">Registeracija</a>
                             </li>
-                            <?php
-                        }
 
-                        ?>
+                        @endif
                     </ul>
                 </div>
             </div>

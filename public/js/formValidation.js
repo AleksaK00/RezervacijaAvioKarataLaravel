@@ -6,7 +6,7 @@ document.getElementById("lozinkaPotvrdaPolje").addEventListener("blur", ObrisiOb
 function UporediSifru()
 {
     let sifra = document.forms["registrationForm"]["password"].value;
-    let potvrdaSifre = document.forms["registrationForm"]["passwordConfirm"].value;
+    let potvrdaSifre = document.forms["registrationForm"]["password_confirm"].value;
     const parentDiv = document.getElementById("lozinkaPotvrdaDiv");
 
     //Brise obavestenje o podudaranju u slucaju da je polje za potvrdu sifre prazno

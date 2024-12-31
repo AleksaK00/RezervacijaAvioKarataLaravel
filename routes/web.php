@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\searchController;
+use App\Http\Controllers\{searchController, AuthenticationController};
 
 Route::get('/', function () {
     return view('index');
@@ -9,10 +9,15 @@ Route::get('/', function () {
 
 Route::post('/search', [searchController::class, 'pretraga']);
 
+//login i logout rute
 Route::get('/login', function () {
     return view('login');
 });
+Route::post('/login', [AuthenticationController::class, 'login']);
+Route::get('/logout', [AuthenticationController::class, 'logout']);
 
+//Rute za registraciju
 Route::get('/register', function () {
     return view('register');
 });
+Route::post('/register', [AuthenticationController::class, 'register']);

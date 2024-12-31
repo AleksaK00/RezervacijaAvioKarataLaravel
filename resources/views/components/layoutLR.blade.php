@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{'css/stil1.css'}}">
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{'css/stil1.css'}}"  rel="stylesheet">
 </head>
 <body>
     <main class="container-fluid d-flex flex-column min-vh-100">
@@ -55,6 +55,8 @@
 
     {{-- JavaScript skripte --}}
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/formValidation.js') }}"></script>
+    @if (Request::path() == 'register')
+        <script src="{{ asset('js/formValidation.js') }}"></script>
+    @endif
 </body>
 </html>

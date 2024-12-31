@@ -11,6 +11,14 @@
             <!-- Seachbar -->
             <x-searchbar/>
 
+            {{--Ispis u slucaju da korisnik nije uneo destinaciju--}}
+            <div class="row mt-3">
+                @if($errors->any())
+                    <div class="col-md-12 p-5 bg-white border border-primary rounded-4">
+                        <p class="display-6 text-center">{{ $errors->first() }}</p>
+                    </div> 
+                @endif
+            </div>
         </div>
 
     </section>

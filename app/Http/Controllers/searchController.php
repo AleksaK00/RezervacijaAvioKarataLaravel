@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{RezultatPretrage, PojedinacniRezultat, Aerodrom, Let, AvioKompanija};
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
 
 class searchController extends Controller
@@ -12,6 +13,18 @@ class searchController extends Controller
     //Puni niz rezultata pretrage i niz podataka za filter na osnovu unetog polaznog i dolaznog grada
     public function Pretraga(Request $request)
     {
+        $validacija = Validator::make($request->all(), [
+            'polazniAerodrom' => 'required',
+            'dolazniAerodrom' => 'required'
+        ], $messages = [
+            'required' => 'Unesite polaznu i dolaznu destinaciju!'
+        ]);
+
+        if ($validacija->fails())
+        {
+            return redirect('/')->withErrors('Unesite destinacije za pretragu letova!');
+        }
+
         // Nalazenje svih aerodroma u polaznom i dolaznom gradu
         $unosPolazni = $request->input('polazniAerodrom');
         $unosDolazni = $request->input('dolazniAerodrom');
