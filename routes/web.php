@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{searchController, AuthenticationController};
+use App\Http\Controllers\{searchController, AuthenticationController, reservationController};
 
 Route::get('/', function () {
     return view('index');
@@ -21,6 +21,9 @@ Route::get('/register', function () {
     return view('register');
 });
 Route::post('/register', [AuthenticationController::class, 'register']);
+
+//Rute za korake rezervacije
+Route::get('/reservation/flights/{brLeta}', [reservationController::class, 'izaberiLet']);
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){

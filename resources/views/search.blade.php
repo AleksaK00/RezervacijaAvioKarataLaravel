@@ -113,13 +113,8 @@
                                             <h4 class="card-text display-5 mt-3">{{ date("H:i", strtotime($rezultat->let['Vreme_Polaska'] ))}} h</h4>
                                         </div>
                                         <div class="col-md-2">
-                                            <!-- Forma koja prosledjuje primarni kljuc stranici za rezervaciju -->
-                                            <form action="" method="post">
-                                                @csrf
-                                                <input type="hidden" name="brLeta" value="{{ $rezultat->let['Br_Leta'] }}">
-                                                <input type="hidden" name="ICAOkod" value="{{ $rezultat->avioKompanija['ICAO_Kod'] }}">
-                                                <input type="submit" name="izaberi" class="btn btn-secondary btn-lg mt-3" value="Rezerviši">
-                                            </form>
+                                            <!-- link koji prosledjuje broj leta stranici za rezervaciju -->
+                                            <a href="reservation/flights/{{ $rezultat->let['Br_Leta'] }}" class="btn btn-secondary btn-lg mt-3">Rezerviši</a>
                                         </div>
                                     </div>
                                 </div>
