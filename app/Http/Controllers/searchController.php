@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\{RezultatPretrage, PojedinacniRezultat, Aerodrom, Let, AvioKompanija};
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
 
 class searchController extends Controller
 {
@@ -72,6 +73,11 @@ class searchController extends Controller
             }
         }
 
+        //Cuvanje gradova u kolacicu da bi korisnik mogao da se vrati na pretragu posle rezervacije, bez da ponovo pretrazuje
+        Cookie::queue('polazniGrad', $unosPolazni, 60);
+        Cookie::queue('dolazniGrad', $unosDolazni, 60);
+
+        //sortiranje po ceni i vracanje pogleda
         usort($pretraga->rezultatNiz, function($a, $b) {return $a->CenaOd() > $b->CenaOd();});
         return view('search', ['pretraga' => $pretraga]);
 

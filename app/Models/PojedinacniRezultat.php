@@ -16,7 +16,7 @@ class PojedinacniRezultat extends Model
     //Vraca najnizu cenu instance leta iz trenutnog rezultata
     public function CenaOd()
     {
-        return InstancaLeta::select('Cena_Ekonomija')->where('Br_Leta', 'like', '%' . $this->let['Br_Leta']. '%' )->min('Cena_Ekonomija');
+        return InstancaLeta::select('Cena_Ekonomija')->where('Br_Leta', 'like', '%' . $this->let['Br_Leta']. '%' )->where('Datum_Polaska', '>', date('Y-m-d'))->min('Cena_Ekonomija');
     }
 
 }

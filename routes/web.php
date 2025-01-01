@@ -23,9 +23,15 @@ Route::get('/register', function () {
 Route::post('/register', [AuthenticationController::class, 'register']);
 
 //Rute za korake rezervacije
-Route::get('/reservation/flights/{brLeta}', [reservationController::class, 'izaberiLet']);
+Route::get('/reservation/{brLeta}', [reservationController::class, 'izaberiLet']);
+Route::get('/reservation/{brLeta}/{datumPolaska}', function($brLeta, $datumPolaska){
+    return view('reservation.classAndSeat', ['brLeta' => $brLeta, 'datumPolaska' => $datumPolaska]);
+});
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){
     return view('info.registrationSuccess');
+});
+Route::get('/info/loginNeededReservation', function(){
+    return view('info.loginNeededReservation');
 });

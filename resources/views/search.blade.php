@@ -107,14 +107,14 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="card-text display-5 mt-3">OD: {{ $rezultat->CenaOd() }} &#8364</h4>
+                                            <h4 class="card-text display-5 mt-3">OD: {{ Number::currency($rezultat->CenaOd(), in: 'EUR', locale: 'de') }}</h4>
                                         </div>
                                         <div class="col-md-4">
                                             <h4 class="card-text display-5 mt-3">{{ date("H:i", strtotime($rezultat->let['Vreme_Polaska'] ))}} h</h4>
                                         </div>
                                         <div class="col-md-2">
                                             <!-- link koji prosledjuje broj leta stranici za rezervaciju -->
-                                            <a href="reservation/flights/{{ $rezultat->let['Br_Leta'] }}" class="btn btn-secondary btn-lg mt-3">Rezerviši</a>
+                                            <a href="reservation/{{ $rezultat->let['Br_Leta'] }}" class="btn btn-secondary btn-lg mt-3">Rezerviši</a>
                                         </div>
                                     </div>
                                 </div>
