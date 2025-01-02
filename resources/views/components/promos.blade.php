@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-9">
 
-            <div id="carouselExampleCaptions" class="carousel slide">
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -75,69 +75,21 @@
 <article class="container mt-5 mb-5 px-2">
     <div class="row gx-2">
 
-        <div class="col-md-3">
-            <div class="card border-primary">
-                <img src="{{ asset('images/AirlineLogos/ASL.png') }}" class="card-img-top" alt="Air Serbia logo">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Air Serbia promo</h5>
-                    <p class="card-text">Rezervišite jedan od promocionih letova Air Srbije za Rim. Ne propustite ponudu!</p>
-                    <form action="/" method="post">
-                        @csrf
-                        <input type="hidden" name="brLeta" value="JU400">
-                        <input type="hidden" name="ICAOkod" value="ASL">
-                        <input type="submit" name="izaberi" class="btn btn-secondary btn-lg mt-3" value="Rezerviši">
-                    </form>
-                </div>
-            </div>
-        </div>
+        <x-infoCard class="col-md-3" image="AirlineLogos/ASL.png" altImage="Air Serbia logo" title="Air Serbia promo" destination="/reservation/JU400" buttonText="Rezerviši" isDisabled="false">
+            Rezervišite jedan od promocionih letova Air Srbije za Rim. Ne propustite ponudu!
+        </x-infoCard>
 
-        <div class="col-md-3">
-            <div class="card border-primary">
-                <img src="{{ asset('images/AirlineLogos/WZZ.png') }}" class="card-img-top" alt="Air Serbia logo">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Air Serbia promo</h5>
-                    <p class="card-text">Rezervišite jedan od promocionih letova Air Srbije za Rim. Ne propustite ponudu!</p>
-                    <form action="/" method="post">
-                        @csrf
-                        <input type="hidden" name="brLeta" value="JU400">
-                        <input type="hidden" name="ICAOkod" value="ASL">
-                        <input type="submit" name="izaberi" class="btn btn-secondary btn-lg mt-3" value="Rezerviši">
-                    </form>
-                </div>
-            </div>
-        </div>
+        <x-infoCard class="col-md-3" image="AirlineLogos/WZZ.png" altImage="Wizz Air logo" title="Wizz Air promo" destination="/reservation/W64031" buttonText="Rezerviši" isDisabled="false">
+            Rezervišite jedan od promocionih letova Wizz air-a za Rim. Ne propustite ponudu!
+        </x-infoCard>
 
-        <div class="col-md-3">
-            <div class="card border-primary">
-                <img src="{{ asset('images/AirlineLogos/ASL.png') }}" class="card-img-top" alt="Air Serbia logo">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Air Serbia promo</h5>
-                    <p class="card-text">Rezervišite jedan od promocionih letova Air Srbije za Rim. Ne propustite ponudu!</p>
-                    <form action="/" method="post">
-                        @csrf
-                        <input type="hidden" name="brLeta" value="JU400">
-                        <input type="hidden" name="ICAOkod" value="ASL">
-                        <input type="submit" name="izaberi" class="btn btn-secondary btn-lg mt-3" value="Rezerviši">
-                    </form>
-                </div>
-            </div>
-        </div>
+        <x-infoCard class="col-md-3" image="AirlineLogos/ASL.png" altImage="Air Serbia logo" title="Air Serbia promo" destination="/reservation/JU422" buttonText="Rezerviši" isDisabled="false">
+            Rezervišite jedan od promocionih letova Air Srbije za Istanbul. Ne propustite ponudu!
+        </x-infoCard>
 
-        <div class="col-md-3">
-            <div class="card border-primary">
-                <img src="{{ asset('images/AirlineLogos/WZZ.png') }}" class="card-img-top" alt="Air Serbia logo">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Air Serbia promo</h5>
-                    <p class="card-text">Rezervišite jedan od promocionih letova Air Srbije za Rim. Ne propustite ponudu!</p>
-                    <form action="/" method="post">
-                        @csrf
-                        <input type="hidden" name="brLeta" value="JU400">
-                        <input type="hidden" name="ICAOkod" value="ASL">
-                        <input type="submit" name="izaberi" class="btn btn-secondary btn-lg mt-3" value="Rezerviši">
-                    </form>
-                </div>
-            </div>
-        </div>
+        <x-infoCard class="col-md-3" image="AirlineLogos/THY.png" altImage="Turkish Airlines logo" title="Turkish Airlines promo" destination="/reservation/TK1080" buttonText="Rezerviši" isDisabled="false">
+            Rezervišite jedan od promocionih letova Turkish Airlines-a za Istanbul. Ne propustite ponudu!
+        </x-infoCard>
 
     </div>
 </article>

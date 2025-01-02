@@ -24,9 +24,7 @@ Route::post('/register', [AuthenticationController::class, 'register']);
 
 //Rute za korake rezervacije
 Route::get('/reservation/{brLeta}', [reservationController::class, 'izaberiLet']);
-Route::get('/reservation/{brLeta}/{datumPolaska}', function($brLeta, $datumPolaska){
-    return view('reservation.classAndSeat', ['brLeta' => $brLeta, 'datumPolaska' => $datumPolaska]);
-});
+Route::get('/reservation/{brLeta}/{datumPolaska}', [reservationController::class, 'ispisiKlase']);
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){

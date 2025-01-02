@@ -17,7 +17,6 @@
                                 <th>Ekonomija</th>
                                 <th>Premium ekonomija</th>
                                 <th>Biznis</th>
-                                <th>Prva klasa</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -28,7 +27,6 @@
                                     <td>{{ Number::currency($let['Cena_Ekonomija'], in: 'EUR', locale: 'de') }}</td>
                                     <td>{{ $let['Cena_Premium_Ekonomija'] ? Number::currency($let['Cena_Premium_Ekonomija'], in: 'EUR', locale: 'de') : 'Nije Dostupna' }}</td>
                                     <td>{{ $let['Cena_Biznis'] ? Number::currency($let['Cena_Biznis'], in: 'EUR', locale: 'de') : 'Nije Dostupna' }}</td>
-                                    <td>{{ $let['Cena_Prva'] ? Number::currency($let['Cena_Prva'], in: 'EUR', locale: 'de') : 'Nije Dostupna' }}</td>
                                     <td><a href="{{ $let['Br_Leta'] }}/{{ $let['Datum_Polaska'] }}" class="btn btn-secondary btn-md">Izaberi</a></td>
                                 </tr>
                             @endforeach

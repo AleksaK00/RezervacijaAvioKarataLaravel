@@ -3,14 +3,16 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 } */
 
-.bg-primary 
-{
+.bg-primary {
     background-color: #ff4500 !important;
 }
 
-.border-primary
-{
+.border-primary{
     border-color: #ff4500 !important;
+}
+
+.border-secondary{
+    border-color: #808080 !important;
 }
 
 .navbar
