@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{searchController, AuthenticationController, reservationController};
+use App\Http\Middleware\loginRequired;
 
 Route::get('/', function () {
     return view('index');
@@ -23,13 +24,14 @@ Route::get('/register', function () {
 Route::post('/register', [AuthenticationController::class, 'register']);
 
 //Rute za korake rezervacije
-Route::get('/reservation/{brLeta}', [reservationController::class, 'izaberiLet']);
-Route::get('/reservation/{brLeta}/{datumPolaska}', [reservationController::class, 'ispisiKlase']);
+Route::get('/reservation/{brLeta}', [reservationController::class, 'izaberiLet'])->middleware(loginRequired::class);
+Route::get('/reservation/{brLeta}/{datumPolaska}', [reservationController::class, 'ispisiKlase'])->middleware(loginRequired::class);
+Route::get('/reservation/{brLeta}/{datumPolaska}/{klasa}', [reservationController::class, 'izborKarataSedista'])->middleware(loginRequired::class);
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){
     return view('info.registrationSuccess');
 });
-Route::get('/info/loginNeededReservation', function(){
-    return view('info.loginNeededReservation');
+Route::get('/info/loginNeeded', function(){
+    return view('info.loginNeeded');
 });

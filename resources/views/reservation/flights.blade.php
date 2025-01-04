@@ -1,10 +1,12 @@
 <x-layout>
 
     <section class="container">
-        <div class="row mt-5 gx-4">       
+        <div class="row mt-5 gx-4">    
+            {{-- Navigaciona traka koja prikazuje korake rezervacije i omogucava vracanje nazad --}}   
             <x-sideProgressBar brLeta="{{ $brLeta }}" datumPolaska="" klasa="" sediste="" korak="1"/>
 
 
+            {{-- Polje sa tabelama za prikaz dostupnih datuma za let i cenom klasa --}}
             <div class="col-md-9 px-5 py-4 bg-white border border-primary rounded-4">
 
                 <h3 class="text-center">Dostupni letovi kompanije <b class="text-primary">{{ $avioKompanija['Ime']}}</b> za let <b class="text-primary">{{ $letovi[0]['Br_Leta'] }}</b></h3>
@@ -33,14 +35,15 @@
                         </tbody>
                     </table>
 
-                <div class="text-center"> 
-                    <form method="post" action="/search">
-                        @csrf
-                        <input type="hidden" value="{{Request::cookie('polazniGrad')}}" name="polazniAerodrom"/>
-                        <input type="hidden" value="{{Request::cookie('dolazniGrad')}}" name="dolazniAerodrom"/>
-                        <input type="submit" value="Nazad" class="btn btn-secondary btn-lg mt-1"/>
-                    </form>
-                </div>
+                    {{-- forma sa kolacicima o pretrazenoj destinaciji, vraca na pretragu --}}
+                    <div class="text-center"> 
+                        <form method="post" action="/search">
+                            @csrf
+                            <input type="hidden" value="{{Request::cookie('polazniGrad')}}" name="polazniAerodrom"/>
+                            <input type="hidden" value="{{Request::cookie('dolazniGrad')}}" name="dolazniAerodrom"/>
+                            <input type="submit" value="Nazad" class="btn btn-secondary btn-lg mt-1"/>
+                        </form>
+                    </div>
 
                 </div>
             </div> 

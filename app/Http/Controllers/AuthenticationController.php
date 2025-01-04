@@ -29,13 +29,18 @@ class AuthenticationController extends Controller
 
         //Provera da li korisnik postoji u bazi
         $korisnik = Korisnik::where('Korisnicko_Ime', 'LIKE', $request->input('username'))->first();
-        $hashProvera = Hash::check($request->input('password'), $korisnik['Sifra']);
-        if (!$korisnik || !$hashProvera)
+        if (!$korisnik)
         {
             return redirect('/login')->withErrors('Ne ispravna sifra ili korisnicko ime!');
         }
         else
         {
+            //proverava ispravnost sifre
+            $hashProvera = Hash::check($request->input('password'), $korisnik['Sifra']);
+            if (!$hashProvera)
+            {
+                return redirect('/login')->withErrors('Ne ispravna sifra ili korisnicko ime!');
+            }
             //postavljanje cookia u slucaju da postoji i vracanje na pocetnu stranu
             Cookie::queue('korisnik', $korisnik['Korisnicko_Ime'], 10080);
             return redirect('/');
