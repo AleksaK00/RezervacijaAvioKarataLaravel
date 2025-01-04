@@ -72,7 +72,12 @@
 
     {{-- JavaScript skripte --}}
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/ResultFilters.js') }}"></script>
+    @if (Request::path() == 'search')
+        <script src="{{ asset('js/ResultFilters.js') }}"></script>
+    @endif
+    @if (Request::routeIs('izborKarataSedista'))
+        <script src="{{ asset('js/reservationActions.js') }}"></script>
+    @endif
     <script src="{{ asset('js/elementClickActions.js') }}"></script>
 </body>
 </html>

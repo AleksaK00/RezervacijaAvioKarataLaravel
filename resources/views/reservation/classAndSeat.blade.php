@@ -8,10 +8,12 @@
 
             <div class="col-md-9 px-2 py-4 bg-white border border-primary rounded-4">
 
+                {{-- Ispis dostupnih klasa, njihove cene i njihovih benefita --}}
                 <h3 class="text-center">Odaberi klasu</h3>
 
                 <div class="row">
 
+                    {{-- Klase ispisane u infocard elementu, u linku salju izabranu klasu --}}
                     <x-infoCard class="col-md-4" image="site/economyLogo.png" altImage="Ekonomija logo" buttonText="Izaberi" destination="/reservation/{{ $instancaLeta['Br_Leta'] . '/' . $instancaLeta['Datum_Polaska'] . '/Ekonomija' }}" title="Ekonomija" isDisabled="false">
                         <div class="d-flex justify-content-center flex-column h-100">
                             <div class="">
@@ -47,18 +49,49 @@
 
                 </div>
 
+                {{-- Drugi odeljak ispisuje se iskljucivo ako je korisnik izabrao klasu --}}
                 @if($izabranaKlasa != "")
 
                     <div class="row border-top border-primary py-4 px-2 m-4">
 
-                        <div class="col-md-8" data-cena = "{{ $instancaLeta['Cena_' . $izabranaKlasa] }}">
+                        {{-- Korisnik bira broj karata, max 5, a zatim mu se prikazuje opcija za rezervaciju sedista, i to onoliko select-ova koliko je izabrao karata --}}
+                        <div class="col-md-8 mt-5" id="odabir" data-Cena = "{{ $instancaLeta['Cena_' . $izabranaKlasa] }}">
                             <form action="" method="POST">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-12 text-center">
+
                                         <label for="brojKarata" class="lead">Izaberite broj Karata</label>
-                                        <input class="form-control" type="number" id="brojKarata" name="brojKarata" min="1" max="5">
-                                        <p class="display-6 mt-4">Cena: {{Number::currency($instancaLeta['Cena_' . $izabranaKlasa], in: 'EUR', locale: 'de')}}</p>
+                                        <input class="form-control w-50 ms-auto me-auto" type="number" id="brojKarata" name="brojKarata" value="1" min="1" max="5" onchange="IzracunajCenu(); PrikaziRezervacijuSedista();">
+                                        <p class="display-6 mt-4" id="ispisCene">Cena: {{Number::currency($instancaLeta['Cena_' . $izabranaKlasa], in: 'EUR', locale: 'de')}}</p>
+
+                                        <div class="border-top border-primary p-3 mt-5">
+
+                                            @for($i = 1; $i <= 5; $i++)
+
+                                                <div class="row mb-3" id="sediste{{ $i }}div"  style="{{ $i == 1 ? '' : 'display: none;'}}">
+                                                    <div class="col-md-8">
+                                                        <h4>Rezervišite sedište{{ $i == 1 ? '' : ' karte ' . $i }}:</h4>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-select" id="sediste{{ $i }}" name="sediste{{ $i}}" onchange="IzracunajDoplatu(); OnemoguciDupliOdabir();">
+                                                            <option value="" data-Doplata="0">Ne rezevišem</option>
+                                                            @foreach($sedista as $sediste)
+                                                                <option value="{{ $sediste['Br_Sedista'] }}" data-Doplata="{{ $sediste['Doplata'] }}">{{ $sediste['Br_Sedista'] }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            @endfor
+
+                                            <h4 class="display-6 mt-5" id="doplataSedista"></h4>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="row tex-center">
+                                    @csrf
+                                    <input type="submit" class="btn btn-secondary btn-lg mt-5" value="Izaberi">
                                 </div>
                             </form>
                         </div>
