@@ -69,7 +69,10 @@ class reservationController extends Controller
         $brojKarata = $request->input('brojKarata');
         for ($i = 1; $i <= $brojKarata; $i++)
         {
-            $izabranaSedista[] = $request->input('sediste' . $i);
+            if ($request->input('sediste' . $i) != "")
+            {
+                $izabranaSedista[] = $request->input('sediste' . $i);
+            }   
         }
         $request->session()->put('brojKarata', $brojKarata);
         $request->session()->put('izabranaSedista', $izabranaSedista);
@@ -159,15 +162,18 @@ class reservationController extends Controller
         $izabranaSedista = $request->session()->get('izabranaSedista');
         foreach ($izabranaSedista as $sediste)
         {
-            RezervisanaSedista::create(
-                [
-                    'Datum_Polaska' => $novaRezervacija['Datum_Polaska'],
-                    'Br_Leta' => $novaRezervacija['Br_Leta'],
-                    'ICAO_Kod' => $novaRezervacija['ICAO_Kod'],
-                    'ID_Korisnika' => $novaRezervacija['ID_Korisnika'],
-                    'Registracija' => $request->input('registracija'),
-                    'Br_Sedista' => $sediste
-            ]);
+            if ($sediste)
+            {
+                RezervisanaSedista::create(
+                    [
+                        'Datum_Polaska' => $novaRezervacija['Datum_Polaska'],
+                        'Br_Leta' => $novaRezervacija['Br_Leta'],
+                        'ICAO_Kod' => $novaRezervacija['ICAO_Kod'],
+                        'ID_Korisnika' => $novaRezervacija['ID_Korisnika'],
+                        'Registracija' => $request->input('registracija'),
+                        'Br_Sedista' => $sediste
+                ]);
+            }
         }
 
         return view('info.reservationSuccess');
