@@ -3,7 +3,7 @@
     <section class="container">
         <div class="row mt-5 gx-4">    
             {{-- Navigaciona traka koja prikazuje korake rezervacije i omogucava vracanje nazad --}}   
-            <x-sideProgressBar brLeta="{{ $brLeta }}" datumPolaska="" klasa="" sediste="" korak="1"/>
+            <x-sideProgressBar brLeta="{{ $brLeta }}" datumPolaska="" klasa="" korak="1"/>
 
 
             {{-- Polje sa tabelama za prikaz dostupnih datuma za let i cenom klasa --}}

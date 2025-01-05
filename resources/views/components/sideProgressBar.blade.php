@@ -1,4 +1,4 @@
-@props(['brLeta', 'datumPolaska', 'klasa', 'sediste', 'korak'])
+@props(['brLeta', 'datumPolaska', 'klasa', 'korak'])
 
 <div class="col-md-3">
     <nav class="navbar navbar-expand-lg bg-primary">
@@ -15,21 +15,21 @@
                     </li>
                     <li class="nav-item">
                         <a 
-                            class="nav-link fs-4 {{ Request::is('reservation/' . $brLeta . '/' . $datumPolaska) ? 'rounded-3 active' : ''}}
-                            {{ ($korak < 2) ? 'disabled' : ''}}" 
+                            class="nav-link fs-4 {{ (Request::is('reservation/' . $brLeta . '/' . $datumPolaska) || Request::is('reservation/' . $brLeta . '/' . $datumPolaska . '/' . $klasa)) ? 'rounded-3 active' : ''}}
+                            {{ ($korak < 2) ? 'disabled' : ''}}"
                             href="/reservation/{{ $brLeta }}/{{ $datumPolaska}}">Klasa i sedište</a>
                     </li>
                     <li class="nav-item">
                         <a 
-                            class="nav-link fs-4 {{ Request::is('reservation/' . $brLeta . '/' . $datumPolaska . '/' . $klasa . '_' . $sediste) ? 'rounded-3 active' : ''}}
+                            class="nav-link fs-4 {{ Request::is('reservation/' . $brLeta . '/' . $datumPolaska . '/' . $klasa . '/info') ? 'rounded-3 active' : ''}}
                             {{ ($korak < 3) ? 'disabled' : ''}}" 
-                            href="/reservation/{{ $brLeta }}/{{ $datumPolaska}}/{{ $klasa . '_' . $sediste}}">Unos informacija</a>
+                            href="/reservation/{{ $brLeta }}/{{ $datumPolaska}}/{{ $klasa . '/info'}}">Unos informacija</a>
                     </li>
                     <li class="nav-item">
-                        <a 
-                            class="nav-link fs-4 {{ Request::is('reservation/' . $brLeta . '/' . $datumPolaska . '/' . $klasa . '_' . $sediste . '/' . 'confirm') ? 'rounded-3 active' : ''}}
+                        <div 
+                            class="nav-link fs-4 {{ Request::is('reservation/' . $brLeta . '/' . $datumPolaska . '/' . $klasa . '/confirm') ? 'rounded-3 active' : ''}}
                             {{ ($korak < 4) ? 'disabled' : ''}}"
-                             href="/reservation/{{ $brLeta }}/{{ $datumPolaska}}/{{ $klasa . '_' . $sediste}}/confirm">Potvrda</a>
+                             >Potvrda</div>
                     </li>
                 </ul>
             </div>

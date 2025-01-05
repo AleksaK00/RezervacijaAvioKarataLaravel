@@ -94,5 +94,6 @@ function IzracunajDoplatu()
         currency: 'EUR',
     });
 
+    document.getElementById('cenaDoplate').value = doplata;
     document.getElementById('doplataSedista').innerHTML = 'Doplata za sedišta: ' + formaterCene.format(doplata);
 }

@@ -3,7 +3,7 @@
     <section class="container">
         <div class="row mt-5 gx-4">       
             {{-- Navigaciona traka koja prikazuje korake rezervacije i omogucava vracanje nazad --}}
-            <x-sideProgressBar brLeta="{{ $instancaLeta['Br_Leta'] }}" datumPolaska="{{ $instancaLeta['Datum_Polaska'] }}" klasa="" sediste="" korak="2"/>
+            <x-sideProgressBar brLeta="{{ $instancaLeta['Br_Leta'] }}" datumPolaska="{{ $instancaLeta['Datum_Polaska'] }}" klasa="{{ $izabranaKlasa != '' ? $izabranaKlasa : ''}}" korak="2"/>
 
 
             <div class="col-md-9 px-2 py-4 bg-white border border-primary rounded-4">
@@ -56,7 +56,7 @@
 
                         {{-- Korisnik bira broj karata, max 5, a zatim mu se prikazuje opcija za rezervaciju sedista, i to onoliko select-ova koliko je izabrao karata --}}
                         <div class="col-md-8 mt-5" id="odabir" data-Cena = "{{ $instancaLeta['Cena_' . $izabranaKlasa] }}">
-                            <form action="" method="POST">
+                            <form action="/reservation/{{ $instancaLeta['Br_Leta'] }}/{{ $instancaLeta['Datum_Polaska'] }}/{{ $izabranaKlasa }}/info" method="POST">
                                 <div class="row justify-content-center">
                                     <div class="col-md-12 text-center">
 
@@ -73,7 +73,7 @@
                                                         <h4>Rezervišite sedište{{ $i == 1 ? '' : ' karte ' . $i }}:</h4>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <select class="form-select" id="sediste{{ $i }}" name="sediste{{ $i}}" onchange="IzracunajDoplatu(); OnemoguciDupliOdabir();">
+                                                        <select class="form-select" id="sediste{{ $i }}" name="sediste{{ $i }}" onchange="IzracunajDoplatu(); OnemoguciDupliOdabir();">
                                                             <option value="" data-Doplata="0">Ne rezevišem</option>
                                                             @foreach($sedista as $sediste)
                                                                 <option value="{{ $sediste['Br_Sedista'] }}" data-Doplata="{{ $sediste['Doplata'] }}">{{ $sediste['Br_Sedista'] }}</option>
@@ -91,6 +91,8 @@
 
                                 <div class="row tex-center">
                                     @csrf
+                                    <input type="hidden" name="cenaKarte" value="{{ $instancaLeta['Cena_' . $izabranaKlasa] }}">
+                                    <input type="hidden" name="cenaDoplate" id="cenaDoplate" value="0">
                                     <input type="submit" class="btn btn-secondary btn-lg mt-5" value="Izaberi">
                                 </div>
                             </form>
