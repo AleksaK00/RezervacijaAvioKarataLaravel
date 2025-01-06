@@ -131,7 +131,7 @@ class reservationController extends Controller
         $rezervacija = Rezervacija::where('Br_Leta', 'LIKE', '%' . $brLeta . '%')->where('Datum_Polaska', $datumPolaska)->where('ID_Korisnika', $korisnik['ID_Korisnika'])->first();
         if ($rezervacija)
         {
-            return view('info.reservationExists');
+            return redirect('/info/reservationExists');
         }
 
         //Upisivanje rezervacije u bazu
@@ -176,7 +176,7 @@ class reservationController extends Controller
             }
         }
 
-        return view('info.reservationSuccess');
+        return redirect('/info/reservationSuccess');;
 
     }
 }

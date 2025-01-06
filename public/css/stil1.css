@@ -28,6 +28,11 @@
     background-color: #ec7d2d !important;
 }
 
+/* .nav-link:visited
+{
+    color: #ffffff !important;
+} */
+
 .btn-light
 {
     --bs-btn-bg: #ffffff;

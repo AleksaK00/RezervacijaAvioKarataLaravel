@@ -26,7 +26,7 @@
                         @if(Request::cookie('korisnik') != '')
 
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="">{{ Request::cookie('korisnik') }}</a>
+                                <a class="nav-link" aria-current="page" href="/account/dashboard">{{ Request::cookie('korisnik') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/logout">Odjavite se</a>

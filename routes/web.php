@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{searchController, AuthenticationController, reservationController};
+use App\Http\Controllers\{AccountActionsController, searchController, AuthenticationController, reservationController};
 use App\Http\Middleware\loginRequired;
 
 Route::get('/', function () {
@@ -32,10 +32,22 @@ Route::get('/reservation/{brLeta}/{datumPolaska}/{klasa}/info', [reservationCont
 Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirm', [reservationController::class, 'prikaziPotvrdu'])->middleware(loginRequired::class);
 Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirmed', [reservationController::class, 'napraviRezervaciju'])->middleware(loginRequired::class);
 
+//Rute za korisnicki nalog
+Route::get('/account/dashboard', [AccountActionsController::class, 'stranicaNaloga'])->middleware(loginRequired::class);
+Route::get('/account/reservations', [AccountActionsController::class, 'pregledajRezervacije'])->middleware(loginRequired::class);
+Route::get('/account/edit', [AccountActionsController::class, 'stranicaIzmeni'])->middleware(loginRequired::class);
+Route::get('/account/delete', [AccountActionsController::class, 'obrisiNalog'])->middleware(loginRequired::class);
+
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){
     return view('info.registrationSuccess');
 });
 Route::get('/info/loginNeeded', function(){
     return view('info.loginNeeded');
+});
+Route::get('/info/reservationSuccess', function(){
+    return view('info.reservationSuccess');
+});
+Route::get('/info/reservationExists', function(){
+    return view('info.reservationExists');
 });
