@@ -78,6 +78,9 @@
     @if (Request::routeIs('izborKarataSedista'))
         <script src="{{ asset('js/reservationActions.js') }}"></script>
     @endif
+    @if (Request::routeIs('rezervacije'))
+        <script src="{{ asset('js/accountActions.js') }}"></script>
+    @endif
     <script src="{{ asset('js/elementClickActions.js') }}"></script>
 </body>
 </html>

@@ -186,6 +186,8 @@ class reservationController extends Controller
         $rezervacija['Otkazana'] = 1;
         $rezervacija->save();
 
+        RezervisanaSedista::where('Br_Leta', 'LIKE', '%' . $brLeta . '%')->where('Datum_Polaska', $datumPolaska)->where('ID_Korisnika', $IDKorisnika)->delete();
+
         return redirect('/account/reservations'); 
     }
 }
