@@ -177,6 +177,15 @@ class reservationController extends Controller
         }
 
         return redirect('/info/reservationSuccess');;
+    }
 
+    //Metoda koja otkazuje rezervaciju
+    function otkaziRezervaciju($brLeta, $datumPolaska, $IDKorisnika)
+    {
+        $rezervacija = Rezervacija::where('Br_Leta', 'LIKE', '%' . $brLeta . '%')->where('Datum_Polaska', $datumPolaska)->where('ID_Korisnika', $IDKorisnika)->first();
+        $rezervacija['Otkazana'] = 1;
+        $rezervacija->save();
+
+        return redirect('/account/reservations'); 
     }
 }

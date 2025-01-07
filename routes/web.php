@@ -37,6 +37,7 @@ Route::get('/account/dashboard', [AccountActionsController::class, 'stranicaNalo
 Route::get('/account/reservations', [AccountActionsController::class, 'pregledajRezervacije'])->middleware(loginRequired::class);
 Route::get('/account/edit', [AccountActionsController::class, 'stranicaIzmeni'])->middleware(loginRequired::class);
 Route::get('/account/delete', [AccountActionsController::class, 'obrisiNalog'])->middleware(loginRequired::class);
+Route::get('/reservation/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [reservationController::class, 'otkaziRezervaciju'])->middleware(loginRequired::class);
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){
