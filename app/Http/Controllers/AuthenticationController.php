@@ -68,6 +68,10 @@ class AuthenticationController extends Controller
         {
             return redirect('/register')->withErrors('Sva polja su obavezna!');
         }
+        if (str_contains($request->input('username'), ' '))
+        {
+            return redirect('/register')->withErrors('Korisničko ime ne sme sadržati razmake!');
+        }
         if (strlen($request->input('password')) < 8 || strtolower($request->input('password')) == $request->input('password') || !preg_match('~[0-9]+~', $request->input('password')))
         {
             return redirect('/register')->withErrors('Šifra mora da ima barem 8 karaktera, sadrži veliko slovo i broj');

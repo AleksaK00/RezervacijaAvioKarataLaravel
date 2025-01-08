@@ -126,3 +126,7 @@
     border-top-color: #ff4500;
 }
 
+legend {
+    all: revert;
+}
+

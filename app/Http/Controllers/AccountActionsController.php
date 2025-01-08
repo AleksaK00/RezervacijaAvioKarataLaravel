@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Cookie;
 use App\Models\{Korisnik, Rezervacija};
 use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AccountActionsController extends Controller
 {
@@ -49,7 +52,7 @@ class AccountActionsController extends Controller
 
     public function stranicaIzmeni()
     {
-        return view('account.edit');
+        return view('account.edit', ['korisnik' => $this->korisnik]);
     }
 
     //Metoda za brisanje naloga, postavljanjem vrednosti polja isDeleted na 1
@@ -59,5 +62,159 @@ class AccountActionsController extends Controller
         $this->korisnik->save();
 
         return redirect('/logout');
+    }
+
+    //Metoda za izmenu osnovnih podataka o nalogu korisnika
+    public function izmeniOsnovnePodatke(Request $request)
+    {
+        //validacija polja
+        $validacija = Validator::make($request->all(), [
+            'username' => 'required|alpha_dash',
+            'email' => 'required|email'
+        ], $messages = [
+            'required' => 'Sva polja su obavezna!',
+            'alpha_dash' => 'Korisnicko ime ne sme da ima razmak!',
+            'email' => 'Email nije validan!'
+        ]);
+
+        if ($validacija->fails())
+        {
+            return redirect('/account/edit')->withErrors($validacija);
+        }
+
+        //Ukoliko je korisnik uneo novo korisnicko ime, proverava da li je slobodno i menja ga ako jeste
+        if ($this->korisnik['Korisnicko_Ime'] != $request->input('username'))
+        {
+            $korisnik = Korisnik::where('Korisnicko_Ime', $request->input('username'))->first();
+            if ($korisnik)
+            {
+                return redirect('/account/edit')->withErrors('Novo korisnicko ime je zauzeto!');
+            }
+            else
+            {
+                $this->korisnik['Korisnicko_Ime'] = $request->input('username');
+                Cookie::queue('korisnik', $request->input('username'), 60 * 24 * 30);
+            }
+        }
+
+        //Isto se ponavlja za email
+        if ($this->korisnik['Email'] != $request->input('email'))
+        {
+            $korisnik = Korisnik::where('Email', $request->input('email'))->first();
+            if ($korisnik)
+            {
+                return redirect('/account/edit')->withErrors('Novi email je zauzet!');
+            }
+            else
+            {
+                $this->korisnik['Email'] = $request->input('email');
+            }
+        }
+
+        $this->korisnik->save();
+        return redirect('/account/dashboard');
+    }
+
+    //Metoda za izmenu Licnih podataka o nalogu korisnika
+    function izmeniLicnePodatke(Request $request)
+    {
+        //validacija polja
+        $validacija = Validator::make($request->all(), [
+            'name' => 'required',
+            'surname' => 'required',
+            'address' => 'required'
+        ], $messages = [
+            'required' => 'Sva polja su obavezna!',
+        ]);
+        if ($validacija->fails())
+        {
+            return redirect('/account/edit')->withErrors($validacija);
+        }
+
+        //Izmena podataka ako je podatak promenjen
+        if ($this->korisnik['Ime'] != $request->input('name'))
+        {
+            $this->korisnik['Ime'] = $request->input('name');
+        }
+        if ($this->korisnik['Prezime'] != $request->input('surname'))
+        {
+            $this->korisnik['Prezime'] = $request->input('surname');
+        }
+        if ($this->korisnik['Adresa'] != $request->input('address'))
+        {
+            $this->korisnik['Adresa'] = $request->input('address');
+        }
+
+        $this->korisnik->save();
+        return redirect('/account/dashboard');
+    }
+
+    //Metoda generise token za reset sifre i salje ga korisniku(U fajlu, jer mailing nije podesen u projektu)
+    function zatraziResetSifre()
+    {
+        //Generisanje random stringa za resetovanje sifre
+        $resetString = bin2hex(random_bytes(16));
+        $hashedResetString = Hash::make($resetString);
+        $this->korisnik['Password_Reset_Token'] = $hashedResetString;
+        $this->korisnik->save();
+
+        $imeFajla = 'resetPassword' . $this->korisnik['ID_Korisnika'] . '.txt';
+        Storage::put($imeFajla, $resetString);
+
+        return  Storage::download($imeFajla, 'resetPassword.txt');
+    }
+
+    //Metoda proverava ispravnost reset koda, i daje mogucnost korisniku da menja sifru na 5 minuta
+    function proveriResetKod(Request $request)
+    {
+        if (Hash::check($request->input('resetCode'), $this->korisnik['Password_Reset_Token']))
+        {
+            Cookie::queue('mozeDaMenjaSifru', 'da', 5);
+            return view('account.passwordChange');
+        }
+    }
+
+    function stranicaPromenaSifre()
+    {
+        if (Cookie::get('mozeDaMenjaSifru') == 'da')
+        {
+            return view('account.passwordChange');
+        }
+        else
+        {
+            return redirect('/account/edit')->withErrors('Token za promenu sifre je istekao!');
+        }
+    }
+
+    //Metoda za promenu sifre
+    function promeniSifru(Request $request)
+    {
+        //Provera validnosti unosa
+        if ($request->input('password') == "" || $request->input('password_confirm') == "")
+        {
+            return redirect('/account/edit/password')->withErrors('Sva polja su obavezna!');
+        }
+        if (strlen($request->input('password')) < 8 || strtolower($request->input('password')) == $request->input('password') || !preg_match('~[0-9]+~', $request->input('password')))
+        {
+            return redirect('/account/edit/password')->withErrors('Šifra mora da ima barem 8 karaktera, sadrži veliko slovo i broj');
+        }
+        if ($request->input('password') != $request->input('password_confirm'))
+        {
+            return redirect('/account/edit/password')->withErrors('Šifre se ne poklapaju!');
+        }
+
+        //ako je token jos uvek validan, promeni sifru
+        if (Cookie::get('mozeDaMenjaSifru') == 'da')
+        {
+            $this->korisnik['Sifra'] = Hash::make($request->input('password'));
+            $this->korisnik['Password_Reset_Token'] = '';
+            $this->korisnik->save();
+
+            return view('info.passwordChangeSuccess');
+        }
+        else
+        {
+            return redirect('/account/edit')->withErrors('Token za promenu sifre je istekao!');
+        }
     }
 }

@@ -54,7 +54,7 @@
         <footer class="container-fluid mt-auto">
 
             <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top">
-                <p class="col-md-4 mb-0 text-body-dark">© 2024 Rezervacija avionskih karata</p>
+                <p class="col-md-4 mb-0 text-body-dark">© 2025 Rezervacija avionskih karata</p>
 
                 <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -78,7 +78,10 @@
     @if (Request::routeIs('izborKarataSedista'))
         <script src="{{ asset('js/reservationActions.js') }}"></script>
     @endif
-    @if (Request::routeIs('rezervacije'))
+    @if (Request::routeIs('promenaSifre'))
+        <script src="{{ asset('js/formValidation.js') }}"></script>
+    @endif
+    @if (Request::routeIs('rezervacije') || Request::routeIs('izmene'))
         <script src="{{ asset('js/accountActions.js') }}"></script>
     @endif
     <script src="{{ asset('js/elementClickActions.js') }}"></script>

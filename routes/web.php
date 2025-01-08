@@ -35,9 +35,15 @@ Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirmed', [reservati
 //Rute za korisnicki nalog
 Route::get('/account/dashboard', [AccountActionsController::class, 'stranicaNaloga'])->middleware(loginRequired::class);
 Route::get('/account/reservations', [AccountActionsController::class, 'pregledajRezervacije'])->middleware(loginRequired::class)->name('rezervacije');
-Route::get('/account/edit', [AccountActionsController::class, 'stranicaIzmeni'])->middleware(loginRequired::class);
+Route::get('/account/edit', [AccountActionsController::class, 'stranicaIzmeni'])->middleware(loginRequired::class)->name('izmene');
 Route::get('/account/delete', [AccountActionsController::class, 'obrisiNalog'])->middleware(loginRequired::class);
 Route::get('/reservation/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [reservationController::class, 'otkaziRezervaciju'])->middleware(loginRequired::class);
+Route::post('/account/edit/base', [AccountActionsController::class, 'izmeniOsnovnePodatke'])->middleware(loginRequired::class);
+Route::post('/account/edit/personal', [AccountActionsController::class, 'izmeniLicnePodatke'])->middleware(loginRequired::class);
+Route::get('/account/edit/resetRequest', [AccountActionsController::class, 'zatraziResetSifre'])->middleware(loginRequired::class);
+Route::post('/account/edit/password', [AccountActionsController::class, 'proveriResetKod'])->middleware(loginRequired::class)->name('promenaSifre');
+Route::get('/account/edit/password', [AccountActionsController::class, 'stranicaPromenaSifre'])->middleware(loginRequired::class)->name('promenaSifre');
+Route::post('/account/edit/password/change', [AccountActionsController::class, 'promeniSifru'])->middleware(loginRequired::class);
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){

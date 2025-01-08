@@ -18,7 +18,7 @@
                                 <a class="nav-link {{ Request::is('account/reservations') ? 'active rounded-3' : ''}}" href="/account/reservations">Rezervacije</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('account/edit') ? 'active rounded-3' : ''}}" href="/account/edit">Izmeni informacije</a>
+                                <a class="nav-link {{ (Request::is('account/edit') || Request::is('account/edit/password')) ? 'active rounded-3' : ''}}" href="/account/edit">Izmeni informacije</a>
                             </li>
                         </ul>
                     </div>
