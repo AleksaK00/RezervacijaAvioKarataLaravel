@@ -20,12 +20,18 @@ class AccountActionsController extends Controller
         $this->korisnik = Korisnik::where('Korisnicko_Ime', Cookie::get('korisnik'))->first();
     }
 
-    //Metoda za prikazivanje stranice naloga sa informacijama o korisniku
+    //Metoda za prikazivanje stranice naloga sa informacijama o korisniku, ili redirekcija na admin panel u slucaju administratora
     public function stranicaNaloga()
     {
-        $brRezervacija = Rezervacija::where('ID_Korisnika', $this->korisnik['ID_Korisnika'])->count();
-
-        return view('account.dashboard', ['korisnik' => $this->korisnik, 'brRezervacija' => $brRezervacija]);
+        if ($this->korisnik['Administrator'] == 1)
+        {
+            return redirect('/admin/users');
+        }
+        else
+        {
+            $brRezervacija = Rezervacija::where('ID_Korisnika', $this->korisnik['ID_Korisnika'])->count();
+            return view('account.dashboard', ['korisnik' => $this->korisnik, 'brRezervacija' => $brRezervacija]);
+        }
     }
 
     //Metoda za prikazivanje rezervacija korisnika
@@ -156,6 +162,7 @@ class AccountActionsController extends Controller
         $resetString = bin2hex(random_bytes(16));
         $hashedResetString = Hash::make($resetString);
         $this->korisnik['Password_Reset_Token'] = $hashedResetString;
+        $this->korisnik['Password_Reset_Timestamp'] = Carbon::now();
         $this->korisnik->save();
 
         $imeFajla = 'resetPassword' . $this->korisnik['ID_Korisnika'] . '.txt';
@@ -167,10 +174,27 @@ class AccountActionsController extends Controller
     //Metoda proverava ispravnost reset koda, i daje mogucnost korisniku da menja sifru na 5 minuta
     function proveriResetKod(Request $request)
     {
-        if (Hash::check($request->input('resetCode'), $this->korisnik['Password_Reset_Token']))
+        //Proverava da li je token stariji od 5 minuta i brise ga ako jeste
+        $poslednjih5Minuta = Carbon::now()->subMinutes(5);
+        if ($this->korisnik['Password_Reset_Timestamp'] <= $poslednjih5Minuta)
         {
-            Cookie::queue('mozeDaMenjaSifru', 'da', 5);
-            return view('account.passwordChange');
+            $this->korisnik['Password_Reset_Timestamp'] = NULL;
+            $this->korisnik['Password_Reset_Token'] = '';
+            $this->korisnik->save();
+
+            return redirect('/account/edit')->withErrors('Ne važeći token!');
+        }
+        else
+        {
+            if (Hash::check($request->input('resetCode'), $this->korisnik['Password_Reset_Token']) && $request->input('resetCode') != '')
+            {
+                Cookie::queue('mozeDaMenjaSifru', 'da', 5);
+                return view('account.passwordChange');
+            }
+            else
+            {
+                return redirect('/account/edit')->withErrors('Ne važeći token!');
+            }
         }
     }
 
@@ -208,6 +232,7 @@ class AccountActionsController extends Controller
         {
             $this->korisnik['Sifra'] = Hash::make($request->input('password'));
             $this->korisnik['Password_Reset_Token'] = '';
+            $this->korisnik['Password_Reset_Timestamp'] = NULL;
             $this->korisnik->save();
 
             return view('info.passwordChangeSuccess');

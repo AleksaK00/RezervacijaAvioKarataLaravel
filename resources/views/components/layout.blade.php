@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Pretražite dostupne letove brzo i jednostavno! | Pogledajte naše ponude letova">
+    <meta name="keywords" content="Rezervacija Avionskih Karata, Rezervacija Karata, Letovi, Air Serbia, Beograd">
+    <meta name="author" content="Aleksa Karamarković">
+
+    <title>Rezervacija Avionskih Karata</title>
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/stil1.css') }}"  rel="stylesheet">
@@ -83,6 +87,9 @@
     @endif
     @if (Request::routeIs('rezervacije') || Request::routeIs('izmene'))
         <script src="{{ asset('js/accountActions.js') }}"></script>
+    @endif
+    @if (Request::routeIs('adminKorisnici') || Request::routeIs('adminRezervacije'))
+        <script src="{{ asset('js/adminActions.js') }}"></script>
     @endif
     <script src="{{ asset('js/elementClickActions.js') }}"></script>
 </body>

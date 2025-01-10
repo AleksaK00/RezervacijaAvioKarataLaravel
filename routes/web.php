@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AccountActionsController, searchController, AuthenticationController, reservationController};
-use App\Http\Middleware\loginRequired;
+use App\Http\Controllers\{AccountActionsController, AdminController, searchController, AuthenticationController, reservationController};
+use App\Http\Middleware\{loginRequired, adminRequired};
 
 Route::get('/', function () {
     return view('index');
@@ -45,6 +45,18 @@ Route::post('/account/edit/password', [AccountActionsController::class, 'proveri
 Route::get('/account/edit/password', [AccountActionsController::class, 'stranicaPromenaSifre'])->middleware(loginRequired::class)->name('promenaSifre');
 Route::post('/account/edit/password/change', [AccountActionsController::class, 'promeniSifru'])->middleware(loginRequired::class);
 
+//Rute za administratora
+Route::get('/admin/users', [AdminController::class, 'prikaziKorisnike'])->middleware(adminRequired::class)->name('adminKorisnici');
+Route::post('/admin/users', [AdminController::class, 'pretraziKorisnike'])->middleware(adminRequired::class)->name('adminKorisnici');
+Route::get('/admin/shutDown/{IDKorisnika}', [AdminController::class, 'ugasiNalog'])->middleware(adminRequired::class);
+Route::get('/admin/delete/{IDKorisnika}', [AdminController::class, 'obrisiNalog'])->middleware(adminRequired::class);
+Route::get('/admin/return/{IDKorisnika}', [AdminController::class, 'vratiNalog'])->middleware(adminRequired::class);
+Route::post('/admin/changename/{IDKorisnika}', [AdminController::class, 'promeniIme'])->middleware(adminRequired::class);
+Route::get('/admin/reservations', [AdminController::class, 'prikaziRezervacije'])->middleware(adminRequired::class)->name('adminRezervacije');
+Route::post('admin/reservations', [AdminController::class, 'pretraziRezervacije'])->middleware(adminRequired::class)->name('adminRezervacije');
+Route::get('/admin/reservations/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [AdminController::class, 'otkaziRezervaciju'])->middleware(adminRequired::class);
+Route::get('/admin/promos', [AdminController::class, 'upravljajPromocijama'])->middleware(adminRequired::class);
+
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){
     return view('info.registrationSuccess');
@@ -57,4 +69,7 @@ Route::get('/info/reservationSuccess', function(){
 });
 Route::get('/info/reservationExists', function(){
     return view('info.reservationExists');
+});
+Route::get('/info/adminNeeded', function(){
+    return view('info.adminNeeded');
 });

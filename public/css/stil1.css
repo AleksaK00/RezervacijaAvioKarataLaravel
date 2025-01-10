@@ -130,3 +130,19 @@ legend {
     all: revert;
 }
 
+.pagination
+{
+    --bs-pagination-color: #ff4500;
+}
+
+.active > .page-link
+{
+    background-color: #ff4500;
+    border-color: #ff4500;
+}
+
+.page-link:hover
+{
+    color: #ec7d2d;
+}
+
