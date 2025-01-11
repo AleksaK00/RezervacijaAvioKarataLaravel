@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Korisnik, Rezervacija, Nalog, RezervisanaSedista};
+use App\Models\{Korisnik, Rezervacija, Nalog, RezervisanaSedista, Promocija};
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
@@ -158,6 +158,8 @@ class AdminController extends Controller
 
     function upravljajPromocijama()
     {
-        return view('admin.promoManagment');
+        $promocije = Promocija::all();
+
+        return view('admin.promoManagment', ['promocije' => $promocije]);
     }
 }

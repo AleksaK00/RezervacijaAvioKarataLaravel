@@ -1,4 +1,6 @@
-﻿<article class="container mt-2 mb-5">
+﻿@props(['promocije'])
+
+<article class="container mt-2 mb-5">
 
     <!-- Karusela sa 3 razlicite ponude linija, na klik pretrazuje sve letove promovisane rute -->
     <div class="row justify-content-center">
@@ -16,40 +18,40 @@
 
                     <!-- Onclick akcije popunjavaju search formu i pretrazuju letove Beograd - Pritisnuti grad -->
                     <div class="carousel-item active">
-                        <img src="{{ asset('images/Promo/Rim.jpg') }}" class="d-block w-100" alt="Slika Rima" onclick="PretragaPromo('formaCarousel1')">
+                        <img src="{{ asset('images/Promo/' . $promocije[0]['Destinacija'] . '.jpg') }}" class="d-block w-100" alt="Slika {{$promocije[0]['Destinacija']}}" onclick="PretragaPromo('formaCarousel1')">
                         <div class="carousel-captionTopText d-none d-md-block">
-                            <h4 onclick="PretragaPromo('formaCarousel1')">Beograd - Rim</h4>
-                            <p onclick="PretragaPromo('formaCarousel1')">Pogledajte naše ponude letova za srce Italije.</p>
+                            <h4 onclick="PretragaPromo('formaCarousel1')">Beograd - {{$promocije[0]['Destinacija']}}</h4>
+                            <p onclick="PretragaPromo('formaCarousel1')">{{ $promocije[0]['Tekst'] }}</p>
                             <form method="post" action="" name="formaCarousel1">
                                 @csrf
                                 <input type="hidden" name="polazniAerodrom" value="Beograd">
-                                <input type="hidden" name="dolazniAerodrom" value="Rim">
+                                <input type="hidden" name="dolazniAerodrom" value="{{$promocije[0]['Destinacija']}}">
                             </form>
                         </div>
                     </div>
 
                     <div class="carousel-item">
-                        <img src="{{ asset('images/Promo/Istanbul.jpg') }}" class="d-block w-100" alt="Slika Istanbula" onclick="PretragaPromo('formaCarousel2')">
+                        <img src="{{ asset('images/Promo/' . $promocije[1]['Destinacija'] . '.jpg') }}" class="d-block w-100" alt="Slika {{$promocije[1]['Destinacija']}}" onclick="PretragaPromo('formaCarousel2')">
                         <div class="carousel-caption d-none d-md-block">
-                            <h4 onclick="PretragaPromo('formaCarousel2')">Beograd - Istanbul</h4>
-                            <p onclick="PretragaPromo('formaCarousel2')">Pogledajte naše ponude letova za most izmedju Evrope i Azije.</p>
+                            <h4 onclick="PretragaPromo('formaCarousel2')">Beograd - {{$promocije[1]['Destinacija']}}</h4>
+                            <p onclick="PretragaPromo('formaCarousel2')">{{ $promocije[1]['Tekst'] }}</p>
                             <form method="post" action="" name="formaCarousel2">
                                 @csrf
                                 <input type="hidden" name="polazniAerodrom" value="Beograd">
-                                <input type="hidden" name="dolazniAerodrom" value="Istanbul">
+                                <input type="hidden" name="dolazniAerodrom" value="{{$promocije[1]['Destinacija']}}">
                             </form>
                         </div>
                     </div>
 
                     <div class="carousel-item">
-                        <img src="{{ asset('images/Promo/London.jpg') }}" class="d-block w-100" alt="Slika Londona" onclick="PretragaPromo('formaCarousel3')">
+                        <img src="{{ asset('images/Promo/' . $promocije[2]['Destinacija'] . '.jpg') }}" class="d-block w-100" alt="Slika {{$promocije[2]['Destinacija']}}" onclick="PretragaPromo('formaCarousel3')">
                         <div class="carousel-caption d-none d-md-block">
-                            <h4 onclick="PretragaPromo('formaCarousel3')">Beograd - London</h4>
-                            <p onclick="PretragaPromo('formaCarousel3')">Pogledajte naše ponude letova za London.</p>
+                            <h4 onclick="PretragaPromo('formaCarousel3')">Beograd - {{$promocije[2]['Destinacija']}}</h4>
+                            <p onclick="PretragaPromo('formaCarousel3')">{{ $promocije[2]['Tekst'] }}</p>
                             <form method="post" action="" name="formaCarousel3">
                                 @csrf
                                 <input type="hidden" name="polazniAerodrom" value="Beograd">
-                                <input type="hidden" name="dolazniAerodrom" value="London">
+                                <input type="hidden" name="dolazniAerodrom" value="{{$promocije[2]['Destinacija']}}">
                             </form>
                         </div>
                     </div>

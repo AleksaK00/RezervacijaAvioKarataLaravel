@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{RezultatPretrage, PojedinacniRezultat, Aerodrom, Let, AvioKompanija};
+use App\Models\{RezultatPretrage, PojedinacniRezultat, Aerodrom, Let, AvioKompanija, Promocija};
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cookie;
@@ -79,7 +79,8 @@ class searchController extends Controller
 
         //sortiranje po ceni i vracanje pogleda
         usort($pretraga->rezultatNiz, function($a, $b) {return $a->CenaOd() > $b->CenaOd();});
-        return view('search', ['pretraga' => $pretraga]);
+        $promocije = Promocija::where('Aktivan_Slot', '>', 0)->orderBy('Aktivan_Slot', 'asc')->get();
+        return view('search', ['pretraga' => $pretraga, 'promocije' => $promocije]);
 
     }
 }

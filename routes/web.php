@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{AccountActionsController, AdminController, searchController, AuthenticationController, reservationController};
 use App\Http\Middleware\{loginRequired, adminRequired};
+use App\Models\Promocija;
 
+//Index ruta, preuzima promocije
 Route::get('/', function () {
-    return view('index');
+    $promocije = Promocija::where('Aktivan_Slot', '>', 0)->orderBy('Aktivan_Slot', 'asc')->get();
+    return view('index', ['promocije' => $promocije]);
 });
 
 Route::post('/search', [searchController::class, 'pretraga']);

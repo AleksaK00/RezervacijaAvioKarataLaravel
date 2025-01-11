@@ -133,6 +133,6 @@
     </section>
 
     <!-- Karusela i kartice sa promocijama, vidi promos.blade.php -->
-    <x-promos></x-promos>
+    <x-promos :promocije="$promocije"></x-promos>
 
 </x-layout>
