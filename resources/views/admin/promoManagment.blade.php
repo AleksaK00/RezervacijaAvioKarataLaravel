@@ -44,7 +44,7 @@
         <fieldset class="col-md-12 px-4 py-2 bg-white border border-primary rounded-4">
             <legend class="display-6 ms-auto me-auto">Aktivne promocije</legend>
 
-            <form>
+            <form method="POST" action="/admin/promos/change">
                 @csrf
                 <div class="container-fluid p-1 mt-5">
                     <div class="row g-3">
@@ -54,7 +54,7 @@
                             <div class="border border-primary p-4 my-3 rounded-4">
                                 <h3 class="text-center">Slot 1</h3>
 
-                                <select name="slot1select" id="slot1select" class="form-control">
+                                <select name="slot1Select" id="slot1Select" class="form-control">
                                     <option value="0">Ne aktivan</option>
                                     @foreach($promocije as $promocija)
                                         <option value="{{$promocija['ID']}}" {{($promocija['Aktivan_Slot'] == 1)? 'selected' : ''}}>{{ $promocija['Destinacija'] }}</option>
@@ -63,12 +63,12 @@
                             </div>
                         </div>
 
-                        {{-- Slot 1 --}}
+                        {{-- Slot 2 --}}
                         <div class="col-md-4">
                             <div class="border border-primary p-4 my-3 rounded-4">
                                 <h3 class="text-center">Slot 2</h3>
 
-                                <select name="slot1select" id="slot1select" class="form-control">
+                                <select name="slot2Select" id="slot2Select" class="form-control">
                                     <option value="0">Ne aktivan</option>
                                     @foreach($promocije as $promocija)
                                         <option value="{{$promocija['ID']}}" {{($promocija['Aktivan_Slot'] == 2)? 'selected' : ''}}>{{ $promocija['Destinacija'] }}</option>
@@ -77,12 +77,12 @@
                             </div>
                         </div>
 
-                        {{-- Slot 1 --}}
+                        {{-- Slot 3 --}}
                         <div class="col-md-4">
                             <div class="border border-primary p-4 my-3 rounded-4">
                                 <h3 class="text-center">Slot 3</h3>
 
-                                <select name="slot1select" id="slot1select" class="form-control">
+                                <select name="slot3Select" id="slot3Select" class="form-control">
                                     <option value="0">Ne aktivan</option>
                                     @foreach($promocije as $promocija)
                                         <option value="{{$promocija['ID']}}" {{($promocija['Aktivan_Slot'] == 3)? 'selected' : ''}}>{{ $promocija['Destinacija'] }}</option>
@@ -112,7 +112,7 @@
                     <div class="col-md-4">
 
                         <div class="mb-3 text-center">
-                            <label for="slikaUnos" class="form-label">Unesi sliku, JPG, 16:9 dovoljno velike rezolucije</label>
+                            <label for="slikaUnos" class="form-label">Unesi sliku, JPG, 16:9, minimum 1080p</label>
                             <input class="form-control" type="file" id="slikaUnos" name="slikaUnos">
                         </div>
 

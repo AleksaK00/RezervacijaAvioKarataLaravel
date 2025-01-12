@@ -198,19 +198,53 @@ class AdminController extends Controller
             ]);
 
             //prebacivanje slike u folder public/images/Promo
-            $request->slikaUnos->move(public_path('images/Promo'), $novaPromocija['Destinacija'] . '.jpg');
+            Storage::disk('images')->putFileAs('Promo', $request->file('slikaUnos'), $novaPromocija['Destinacija'] . '.jpg');
         }
 
         return redirect('/admin/promos');
     }
 
     //Metoda za brisanje promocije
-    public function obrisiPromociju($IDpromocije)
+    function obrisiPromociju($IDpromocije)
     {
         $promocija = Promocija::where('ID', $IDpromocije)->first();
         Storage::disk('images')->delete('Promo/' . $promocija['Destinacija'] . '.jpg');
         $promocija->delete();
 
         return redirect('/admin/promos');
+    }
+
+    //Metoda za izmenu 3 aktivne promocije
+    function izmeniAktivnePromocije(Request $request)
+    {
+        //validacija polja
+        $validacija = Validator::make($request->all(), [
+            'slot1Select' => 'different:slot2Select|different:slot3Select|gt:0',
+            'slot2Select' => 'different:slot1Select|different:slot3Select|gt:0',
+            'slot3Select' => 'different:slot1Select|different:slot2Select|gt:0'
+        ], $messages = [
+            'different' => 'Ista promocija ne može da bude u 2 slota!',
+            'gt' => 'Svi slotovi moraju da imaju promociju!'
+        ]);
+
+        if ($validacija->fails())
+        {
+            return redirect('/admin/promos')->withErrors($validacija);
+        }
+
+        //Skidanje svih starih aktivnih promocija
+        $stariSlotovi = Promocija::whereIn('Aktivan_Slot', ['1', '2', '3'])->get();
+        foreach($stariSlotovi as $stariSlot)
+        {
+            $stariSlot['Aktivan_Slot'] = NULL;
+            $stariSlot->save();
+        }
+
+        //Postavljanje svih novih aktivnih promocija
+        Promocija::where('ID', $request->input('slot1Select'))->update(['Aktivan_Slot' => '1']);
+        Promocija::where('ID', $request->input('slot2Select'))->update(['Aktivan_Slot' => '2']);
+        Promocija::where('ID', $request->input('slot3Select'))->update(['Aktivan_Slot' => '3']);
+
+        return redirect('admin/promos');
     }
 }

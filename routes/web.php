@@ -60,6 +60,7 @@ Route::post('admin/reservations', [AdminController::class, 'pretraziRezervacije'
 Route::get('/admin/reservations/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [AdminController::class, 'otkaziRezervaciju'])->middleware(adminRequired::class);
 Route::get('/admin/promos', [AdminController::class, 'upravljajPromocijama'])->middleware(adminRequired::class)->name('adminPromocije');
 Route::post('/admin/promos/new', [AdminController::class, 'novaPromocija'])->middleware(adminRequired::class);
+Route::post('/admin/promos/change', [AdminController::class, 'izmeniAktivnePromocije'])->middleware(adminRequired::class);
 Route::get('/admin/promos/delete/{IDpromocije}', [AdminController::class, 'obrisiPromociju'])->middleware(adminRequired::class);
 
 //Rute za jednostavne poruke
