@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prijavite se">
+    <meta name="keywords" content="Rezervacija Avionskih Karata">
+    <meta name="author" content="Aleksa Karamarković">
     <title>Online Rezervacija Avio Karata</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/stil1.css') }}"  rel="stylesheet">

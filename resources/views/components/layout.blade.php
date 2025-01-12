@@ -6,7 +6,7 @@
     <meta name="description" content="Pretražite dostupne letove brzo i jednostavno! | Pogledajte naše ponude letova">
     <meta name="keywords" content="Rezervacija Avionskih Karata, Rezervacija Karata, Letovi, Air Serbia, Beograd">
     <meta name="author" content="Aleksa Karamarković">
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <title>Rezervacija Avionskih Karata</title>
 
