@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\{Korisnik, Rezervacija, Nalog, RezervisanaSedista, Promocija};
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -156,10 +157,60 @@ class AdminController extends Controller
         return redirect('/admin/reservations'); 
     }
 
+    //Metoda koja ispisuje stranicu za upravljanje promocija
     function upravljajPromocijama()
     {
         $promocije = Promocija::all();
 
         return view('admin.promoManagment', ['promocije' => $promocije]);
+    }
+
+    //Metoda koja ubacuje novu promociju
+    function novaPromocija(Request $request)
+    {
+        //validacija polja
+        $validacija = Validator::make($request->all(), [
+            'destinacijaUnos' => 'required',
+            'tekstUnos' => 'required',
+            'slikaUnos' => 'required|mimes:jpg'
+        ], $messages = [
+            'required' => 'Sva polja su obavezna!',
+            'mimes' => 'slika mora da bude JPG'
+        ]);
+
+        if ($validacija->fails())
+        {
+            return redirect('/admin/promos')->withErrors($validacija);
+        }
+
+        //Ubacivanje nove promocije, osim ako promocija za grad vec postoji
+        $promocijaPostoji = Promocija::where('Destinacija', $request->input('destinacijaUnos'))->first();
+        if ($promocijaPostoji)
+        {
+            return redirect('/admin/promos')->withErrors('Promocija već postoji u bazi, obriši postojeću za unos nove verzije');
+        }
+        else
+        {
+            $novaPromocija = Promocija::create([
+                'Destinacija' => $request->input('destinacijaUnos'),
+                'Tekst' => $request->input('tekstUnos'),
+                'Aktivan_Slot' => NULL
+            ]);
+
+            //prebacivanje slike u folder public/images/Promo
+            $request->slikaUnos->move(public_path('images/Promo'), $novaPromocija['Destinacija'] . '.jpg');
+        }
+
+        return redirect('/admin/promos');
+    }
+
+    //Metoda za brisanje promocije
+    public function obrisiPromociju($IDpromocije)
+    {
+        $promocija = Promocija::where('ID', $IDpromocije)->first();
+        Storage::disk('images')->delete('Promo/' . $promocija['Destinacija'] . '.jpg');
+        $promocija->delete();
+
+        return redirect('/admin/promos');
     }
 }

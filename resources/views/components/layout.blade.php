@@ -6,6 +6,7 @@
     <meta name="description" content="Pretražite dostupne letove brzo i jednostavno! | Pogledajte naše ponude letova">
     <meta name="keywords" content="Rezervacija Avionskih Karata, Rezervacija Karata, Letovi, Air Serbia, Beograd">
     <meta name="author" content="Aleksa Karamarković">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     <title>Rezervacija Avionskih Karata</title>
 
@@ -88,7 +89,7 @@
     @if (Request::routeIs('rezervacije') || Request::routeIs('izmene'))
         <script src="{{ asset('js/accountActions.js') }}"></script>
     @endif
-    @if (Request::routeIs('adminKorisnici') || Request::routeIs('adminRezervacije'))
+    @if (Request::routeIs('adminKorisnici') || Request::routeIs('adminRezervacije') || Request::routeIs('adminPromocije'))
         <script src="{{ asset('js/adminActions.js') }}"></script>
     @endif
     <script src="{{ asset('js/elementClickActions.js') }}"></script>

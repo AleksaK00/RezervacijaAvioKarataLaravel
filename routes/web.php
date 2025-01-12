@@ -58,7 +58,9 @@ Route::post('/admin/changename/{IDKorisnika}', [AdminController::class, 'promeni
 Route::get('/admin/reservations', [AdminController::class, 'prikaziRezervacije'])->middleware(adminRequired::class)->name('adminRezervacije');
 Route::post('admin/reservations', [AdminController::class, 'pretraziRezervacije'])->middleware(adminRequired::class)->name('adminRezervacije');
 Route::get('/admin/reservations/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [AdminController::class, 'otkaziRezervaciju'])->middleware(adminRequired::class);
-Route::get('/admin/promos', [AdminController::class, 'upravljajPromocijama'])->middleware(adminRequired::class);
+Route::get('/admin/promos', [AdminController::class, 'upravljajPromocijama'])->middleware(adminRequired::class)->name('adminPromocije');
+Route::post('/admin/promos/new', [AdminController::class, 'novaPromocija'])->middleware(adminRequired::class);
+Route::get('/admin/promos/delete/{IDpromocije}', [AdminController::class, 'obrisiPromociju'])->middleware(adminRequired::class);
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){
