@@ -107,7 +107,7 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="card-text display-5 mt-3">OD: {{ Number::currency($rezultat->CenaOd(), in: 'EUR', locale: 'de') }}</h4>
+                                            <h4 class="card-text display-5 mt-3">OD: {{ ($rezultat->CenaOd() != null)? Number::currency($rezultat->CenaOd(), in: 'EUR', locale: 'de') : '/' }}</h4>
                                         </div>
                                         <div class="col-md-4">
                                             <h4 class="card-text display-5 mt-3">{{ date("H:i", strtotime($rezultat->let['Vreme_Polaska'] ))}} h</h4>

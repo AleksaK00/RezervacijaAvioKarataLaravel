@@ -9,7 +9,7 @@
             {{-- Polje sa tabelama za prikaz dostupnih datuma za let i cenom klasa --}}
             <div class="col-md-9 px-5 py-4 bg-white border border-primary rounded-4">
 
-                <h3 class="text-center">Dostupni letovi kompanije <b class="text-primary">{{ $avioKompanija['Ime']}}</b> za let <b class="text-primary">{{ $letovi[0]['Br_Leta'] }}</b></h3>
+                <h3 class="text-center">Dostupni letovi kompanije <b class="text-primary">{{ $avioKompanija['Ime']}}</b> za let <b class="text-primary">{{ $brLeta }}</b></h3>
 
                 <div class="table-responsive mt-4">
                     <table class="table table-hover align-middle">

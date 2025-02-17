@@ -81,12 +81,12 @@
             Rezervišite jedan od promocionih letova Air Srbije za Rim. Ne propustite ponudu!
         </x-infoCard>
 
-        <x-infoCard class="col-md-3" image="AirlineLogos/WZZ.png" altImage="Wizz Air logo" title="Wizz Air promo" destination="/reservation/W64031" buttonText="Rezerviši" isDisabled="false">
-            Rezervišite jedan od promocionih letova Wizz air-a za Rim. Ne propustite ponudu!
+        <x-infoCard class="col-md-3" image="AirlineLogos/WZZ.png" altImage="Wizz Air logo" title="Wizz Air promo" destination="/reservation/W94001" buttonText="Rezerviši" isDisabled="false">
+            Rezervišite jedan od promocionih letova Wizz air-a za London. Ne propustite ponudu!
         </x-infoCard>
 
-        <x-infoCard class="col-md-3" image="AirlineLogos/ASL.png" altImage="Air Serbia logo" title="Air Serbia promo" destination="/reservation/JU422" buttonText="Rezerviši" isDisabled="false">
-            Rezervišite jedan od promocionih letova Air Srbije za Istanbul. Ne propustite ponudu!
+        <x-infoCard class="col-md-3" image="AirlineLogos/KLM.png" altImage="KLM logo" title="KLM promo" destination="/reservation/KL1982" buttonText="Rezerviši" isDisabled="false">
+            Rezervišite jedan od promocionih letova KLM-a za Amsterdam. Ne propustite ponudu!
         </x-infoCard>
 
         <x-infoCard class="col-md-3" image="AirlineLogos/THY.png" altImage="Turkish Airlines logo" title="Turkish Airlines promo" destination="/reservation/TK1080" buttonText="Rezerviši" isDisabled="false">

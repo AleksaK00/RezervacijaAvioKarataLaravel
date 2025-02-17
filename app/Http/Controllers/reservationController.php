@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{InstancaLeta, AvioKompanija, Avion, Sediste, Korisnik, Rezervacija, Nalog, RezervisanaSedista};
+use App\Models\{InstancaLeta, AvioKompanija, Avion, Sediste, Korisnik, Rezervacija, Nalog, RezervisanaSedista, Let};
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +15,8 @@ class reservationController extends Controller
 
         //trazi sve instance leta posle trenutnog datuma
         $instanceLeta = InstancaLeta::where('Br_Leta', 'LIKE', '%' . $brLeta .'%')->where('Datum_Polaska', '>', date('Y-m-d'))->orderBy('Datum_Polaska', 'asc')->get();
-        $avioKompanija = AvioKompanija::where('ICAO_Kod', 'LIKE', '%' . $instanceLeta[0]['ICAO_Kod'] .'%')->first();
+        $let = Let::where('Br_Leta', 'LIKE', '%' . $brLeta .'%')->first();
+        $avioKompanija = AvioKompanija::where('ICAO_Kod', 'LIKE', '%' . $let['ICAO_Kod'] .'%')->first();
 
         return view('reservation.flights', ['letovi' => $instanceLeta, 'avioKompanija' => $avioKompanija, 'brLeta' => $brLeta]);
     }
