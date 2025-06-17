@@ -80,7 +80,6 @@ class reservationController extends Controller
         $request->session()->put('cenaKarte', $request->input('cenaKarte'));
         $request->session()->put('cenaDoplate', $request->input('cenaDoplate'));
 
-
         //Trazenje korisnika koji je trenutno ulogovan zbog njegovih informacija
         $korisnik = Korisnik::where('Korisnicko_Ime', Cookie::get('korisnik'))->first();
 

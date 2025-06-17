@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{Korisnik, Rezervacija, Nalog, RezervisanaSedista, Promocija};
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
     //Metoda koja vraca korisnika na pregled
     function prikaziKorisnike()
     {
-        $korisnici = Korisnik::where('Administrator', '<>', 1)->paginate(15);
+        $korisnici = Korisnik::where('Uloga', '<>', 'ADMIN')->paginate(15);
 
         return view('admin.users', ['korisnici' => $korisnici]);
     }
@@ -23,11 +22,11 @@ class AdminController extends Controller
     {
         if (is_numeric($request->input('pretragaPolje')))
         {
-            $korisnici = Korisnik::where('ID_Korisnika', $request->input('pretragaPolje'))->where('Administrator', '<>', 1)->paginate(15);
+            $korisnici = Korisnik::where('ID_Korisnika', $request->input('pretragaPolje'))->where('Uloga', '<>', 'ADMIN')->paginate(15);
         }
         else
         {
-            $korisnici = Korisnik::where('Korisnicko_Ime', 'LIKE', '%' . $request->input('pretragaPolje') . '%')->where('Administrator', '<>', 1)->paginate(15);
+            $korisnici = Korisnik::where('Korisnicko_Ime', 'LIKE', '%' . $request->input('pretragaPolje') . '%')->where('Uloga', '<>', 'ADMIN')->paginate(15);
         }
 
         return view('admin.users', ['korisnici' => $korisnici]);
@@ -110,141 +109,59 @@ class AdminController extends Controller
 
         return redirect('/admin/users');
     }
-
-    //Metoda koja prikazuje sve rezervacije i korisnicko ime rezervacije
-    function prikaziRezervacije()
+    
+    //Metoda koja prikazuje formu za dodavanje novog korisnika
+    function noviKorisnik()
     {
-        $rezervacije = Rezervacija::join('korisnik', 'rezervacija.ID_Korisnika', '=', 'korisnik.ID_Korisnika')->select('rezervacija.*', 'korisnik.Korisnicko_Ime as KorisnickoIme')->paginate(15);
+        return view('admin.noviKorisnik');
+    }
 
-        //Racunanje broja dana do polaska za svaku rezervaciju
-        foreach ($rezervacije as $rezervacija)
+    //Metoda koja dodaje novog korisnika
+    function dodajNovogKorisnika(Request $request)
+    {
+        //Validacija da li su polja uneta i korektno uneta
+        if ($request->input('username') == "" || $request->input('password') == "" || $request->input('password_confirm') == "" || $request->input('name') == "" || $request->input('surname') == "" || $request->input('adress') == "")
         {
-            $danaDo = Carbon::now()->diffInDays($rezervacija['Datum_Polaska']);
-            $rezervacija['danaDo'] = $danaDo;
+            return redirect('/admin/noviKorisnik')->withErrors('Sva polja su obavezna!');
+        }
+        if (str_contains($request->input('username'), ' '))
+        {
+            return redirect('/admin/noviKorisnik')->withErrors('Korisničko ime ne sme sadržati razmake!');
+        }
+        if (strlen($request->input('password')) < 8 || strtolower($request->input('password')) == $request->input('password') || !preg_match('~[0-9]+~', $request->input('password')))
+        {
+            return redirect('/admin/noviKorisnik')->withErrors('Šifra mora da ima barem 8 karaktera, sadrži veliko slovo i broj');
+        }
+        if ($request->input('password') != $request->input('password_confirm'))
+        {
+            return redirect('/admin/noviKorisnik')->withErrors('Šifre se ne poklapaju!');
         }
 
-        return view('admin.reservations', ['rezervacije' => $rezervacije]);
-    }
-
-    //Metoda koja pretrazuje rezervacije po koriscnickom imenu
-    function pretraziRezervacije(Request $request)
-    {
-        $korisnici = Korisnik::where('Korisnicko_Ime', 'LIKE', '%' . $request->input('pretragaPolje') . '%')->select('ID_Korisnika')->get();
-
-        $rezervacije = Rezervacija::whereIn('rezervacija.ID_Korisnika', $korisnici)->join('korisnik', 'rezervacija.ID_Korisnika', '=', 'korisnik.ID_Korisnika')
-         ->select('rezervacija.*', 'korisnik.Korisnicko_Ime as KorisnickoIme')->paginate(15);
-
-        //Racunanje broja dana do polaska za svaku rezervaciju
-        foreach ($rezervacije as $rezervacija)
+        //Provera da li je email vec u upotrebi
+        $korisnikEmail = Korisnik::where('Email', $request->input('email'))->first();
+        if ($korisnikEmail)
         {
-            $danaDo = Carbon::now()->diffInDays($rezervacija['Datum_Polaska']);
-            $rezervacija['danaDo'] = $danaDo;
+            return redirect('/admin/noviKorisnik')->withErrors('email je već u upotrebi!');
+        }
+        //Provera da li je korisnicko ime vec u upotrebi
+        $korisnikIme = Korisnik::where('Korisnicko_Ime', $request->input('username'))->first();
+        if ($korisnikIme)
+        {
+            return redirect('/admin/noviKorisnik')->withErrors('Korisnik sa unetim korisničkim imenom već postoji!');
         }
 
-        return view('admin.reservations', ['rezervacije' => $rezervacije]);
-    }
-
-    //Metoda koja otkazuje zadatu rezervaciju
-    function otkaziRezervaciju($brLeta, $datumPolaska , $IDkorisnika)
-    {
-        $rezervacija = Rezervacija::where('Br_Leta', 'LIKE', '%' . $brLeta . '%')->where('Datum_Polaska', $datumPolaska)->where('ID_Korisnika', $IDkorisnika)->first();
-        $rezervacija['Otkazana'] = 1;
-        $rezervacija->save();
-
-        //Brisanje rezervisanih
-        RezervisanaSedista::where('Br_Leta', 'LIKE', '%' . $brLeta . '%')->where('Datum_Polaska', $datumPolaska)->where('ID_Korisnika', $IDkorisnika)->delete();
-
-        return redirect('/admin/reservations'); 
-    }
-
-    //Metoda koja ispisuje stranicu za upravljanje promocija
-    function upravljajPromocijama()
-    {
-        $promocije = Promocija::all();
-
-        return view('admin.promoManagment', ['promocije' => $promocije]);
-    }
-
-    //Metoda koja ubacuje novu promociju
-    function novaPromocija(Request $request)
-    {
-        //validacija polja
-        $validacija = Validator::make($request->all(), [
-            'destinacijaUnos' => 'required',
-            'tekstUnos' => 'required',
-            'slikaUnos' => 'required|mimes:jpg'
-        ], $messages = [
-            'required' => 'Sva polja su obavezna!',
-            'mimes' => 'slika mora da bude JPG'
+        //kreiranje novog korisnickog naloga i ulogovanje
+        $noviKorisnik = Korisnik::create(
+            [
+                'Korisnicko_Ime' => $request->input('username'),
+                'Email' => $request->input('email'),
+                'Sifra' => Hash::make($request->input('password')),
+                'Ime' => $request->input('name'),
+                'Prezime' => $request->input('surname'),
+                'Adresa' => $request->input('adress'),
+                'Uloga' => $request->input('role')
         ]);
 
-        if ($validacija->fails())
-        {
-            return redirect('/admin/promos')->withErrors($validacija);
-        }
-
-        //Ubacivanje nove promocije, osim ako promocija za grad vec postoji
-        $promocijaPostoji = Promocija::where('Destinacija', $request->input('destinacijaUnos'))->first();
-        if ($promocijaPostoji)
-        {
-            return redirect('/admin/promos')->withErrors('Promocija već postoji u bazi, obriši postojeću za unos nove verzije');
-        }
-        else
-        {
-            $novaPromocija = Promocija::create([
-                'Destinacija' => $request->input('destinacijaUnos'),
-                'Tekst' => $request->input('tekstUnos'),
-                'Aktivan_Slot' => NULL
-            ]);
-
-            //prebacivanje slike u folder public/images/Promo
-            Storage::disk('images')->putFileAs('Promo', $request->file('slikaUnos'), $novaPromocija['Destinacija'] . '.jpg');
-        }
-
-        return redirect('/admin/promos');
-    }
-
-    //Metoda za brisanje promocije
-    function obrisiPromociju($IDpromocije)
-    {
-        $promocija = Promocija::where('ID', $IDpromocije)->first();
-        Storage::disk('images')->delete('Promo/' . $promocija['Destinacija'] . '.jpg');
-        $promocija->delete();
-
-        return redirect('/admin/promos');
-    }
-
-    //Metoda za izmenu 3 aktivne promocije
-    function izmeniAktivnePromocije(Request $request)
-    {
-        //validacija polja
-        $validacija = Validator::make($request->all(), [
-            'slot1Select' => 'different:slot2Select|different:slot3Select|gt:0',
-            'slot2Select' => 'different:slot1Select|different:slot3Select|gt:0',
-            'slot3Select' => 'different:slot1Select|different:slot2Select|gt:0'
-        ], $messages = [
-            'different' => 'Ista promocija ne može da bude u 2 slota!',
-            'gt' => 'Svi slotovi moraju da imaju promociju!'
-        ]);
-
-        if ($validacija->fails())
-        {
-            return redirect('/admin/promos')->withErrors($validacija);
-        }
-
-        //Skidanje svih starih aktivnih promocija
-        $stariSlotovi = Promocija::whereIn('Aktivan_Slot', ['1', '2', '3'])->get();
-        foreach($stariSlotovi as $stariSlot)
-        {
-            $stariSlot['Aktivan_Slot'] = NULL;
-            $stariSlot->save();
-        }
-
-        //Postavljanje svih novih aktivnih promocija
-        Promocija::where('ID', $request->input('slot1Select'))->update(['Aktivan_Slot' => '1']);
-        Promocija::where('ID', $request->input('slot2Select'))->update(['Aktivan_Slot' => '2']);
-        Promocija::where('ID', $request->input('slot3Select'))->update(['Aktivan_Slot' => '3']);
-
-        return redirect('admin/promos');
+        return redirect('/admin/users');
     }
 }

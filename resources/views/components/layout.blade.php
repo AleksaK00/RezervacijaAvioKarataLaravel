@@ -92,6 +92,9 @@
     @if (Request::routeIs('adminKorisnici') || Request::routeIs('adminRezervacije') || Request::routeIs('adminPromocije'))
         <script src="{{ asset('js/adminActions.js') }}"></script>
     @endif
+    @if (Request::routeIs('adminNoviKorisnik'))
+        <script src="{{ asset('js/formValidation.js') }}"></script>
+    @endif
     <script src="{{ asset('js/elementClickActions.js') }}"></script>
 </body>
 </html>

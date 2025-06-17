@@ -1,5 +1,5 @@
 <x-adminLayout>
-    <x-adminSearchBar akcija="/admin/reservations" />
+    <x-adminSearchBar akcija="/manager/reservations" />
     
     {{-- Ispisivanje gresaka unosa --}}
     @if($errors->any())          

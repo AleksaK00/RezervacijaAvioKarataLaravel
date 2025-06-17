@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Korisnik;
 
-class adminRequired
+class managerRequired
 {
     /**
      * Handle an incoming request.
@@ -23,7 +23,7 @@ class adminRequired
         }
         
         $korisnik = Korisnik::where('Korisnicko_Ime', Cookie::get('korisnik'))->first();
-        if ($korisnik['Uloga'] != 'ADMIN')
+        if ($korisnik['Uloga'] != 'ADMIN' && $korisnik['Uloga'] != 'MENADZER')
         {
             return redirect('/info/adminNeeded');
         }

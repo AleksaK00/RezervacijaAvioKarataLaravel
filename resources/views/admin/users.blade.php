@@ -21,7 +21,7 @@
                 <th>email</th>
                 <th>Ime</th>
                 <th>Prezime</th>
-                <th>Adresa</th>
+                <th>Uloga</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -44,7 +44,7 @@
                     <td>{{ $korisnik['Email']}}</td>
                     <td>{{ $korisnik['Ime']}}</td>
                     <td>{{ $korisnik['Prezime']}}</td>
-                    <td>{{ $korisnik['Adresa']}}</td>
+                    <td>{{ $korisnik['Uloga']}}</td>
                     {{-- Gasenje naloga dostupno ako nije ugasen, vracanje ako jeste, koristi modal za potvrdu --}}
                     <td>
                         @if($korisnik['Is_Deleted'] != 1)

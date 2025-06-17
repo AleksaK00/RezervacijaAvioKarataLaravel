@@ -44,7 +44,7 @@
         <fieldset class="col-md-12 px-4 py-2 bg-white border border-primary rounded-4">
             <legend class="display-6 ms-auto me-auto">Aktivne promocije</legend>
 
-            <form method="POST" action="/admin/promos/change">
+            <form method="POST" action="/manager/promos/change">
                 @csrf
                 <div class="container-fluid p-1 mt-5">
                     <div class="row g-3">
@@ -106,7 +106,7 @@
         <fieldset class="col-md-12 px-4 py-2 bg-white border border-primary rounded-4">
             <legend class="display-6 ms-auto me-auto">Nova Promocija</legend>
 
-            <form method="POST" action="/admin/promos/new" enctype="multipart/form-data">
+            <form method="POST" action="/manager/promos/new" enctype="multipart/form-data">
                 @csrf
                 <div class="row justify-content-center p-3">
                     <div class="col-md-4">

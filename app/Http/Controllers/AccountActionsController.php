@@ -23,9 +23,13 @@ class AccountActionsController extends Controller
     //Metoda za prikazivanje stranice naloga sa informacijama o korisniku, ili redirekcija na admin panel u slucaju administratora
     public function stranicaNaloga()
     {
-        if ($this->korisnik['Administrator'] == 1)
+        if ($this->korisnik['Uloga'] == 'ADMIN')
         {
             return redirect('/admin/users');
+        }
+        if ($this->korisnik['Uloga'] == 'MENADZER')
+        {
+            return redirect('/manager/reservations');
         }
         else
         {

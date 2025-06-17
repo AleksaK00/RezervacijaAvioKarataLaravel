@@ -130,7 +130,7 @@ class AuthenticationController extends Controller
                 'Ime' => $request->input('name'),
                 'Prezime' => $request->input('surname'),
                 'Adresa' => $request->input('adress'),
-                'Administrator' => 0
+                'Uloga' => 'KORISNIK'
         ]);
         Cookie::queue('korisnik', $noviKorisnik['Korisnicko_Ime'], 10080);
 

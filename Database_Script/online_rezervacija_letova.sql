@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2025 at 09:45 PM
+-- Generation Time: Jun 17, 2025 at 03:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -261,7 +261,7 @@ CREATE TABLE `korisnik` (
   `Prezime` varchar(30) NOT NULL,
   `Email` varchar(40) NOT NULL,
   `Adresa` varchar(120) NOT NULL,
-  `Administrator` tinyint(1) DEFAULT NULL,
+  `Uloga` varchar(20) DEFAULT NULL,
   `Password_Reset_Token` varchar(100) DEFAULT NULL,
   `Password_Reset_Timestamp` timestamp NULL DEFAULT NULL,
   `Is_Deleted` tinyint(1) DEFAULT NULL
@@ -271,14 +271,15 @@ CREATE TABLE `korisnik` (
 -- Dumping data for table `korisnik`
 --
 
-INSERT INTO `korisnik` (`ID_Korisnika`, `Korisnicko_Ime`, `Sifra`, `Ime`, `Prezime`, `Email`, `Adresa`, `Administrator`, `Password_Reset_Token`, `Password_Reset_Timestamp`, `Is_Deleted`) VALUES
-(1, 'AleksaK', '$2y$12$MKpYeR2QwaSLrpOWju3qX.cPUidOix4fTyh.lcQw6nQB23H1SenGy', 'Aleksa', 'Karamarkovic', 'aleksa56522@its.edu.rs', 'Adresa 123', 0, NULL, NULL, NULL),
-(2, 'KorisnikNovi', '$2y$12$UJW/wtpBHc6te7B/Xunmv.t1FJyR3VsuoiVcYm3GrMlWqNBdWpDhm', 'Novi', 'Korisnik', 'noviKorisnik@gmail.com', 'Nova Adresa 37', 0, '$2y$12$dA0Q/ksVX4.PIy/V8S.08eJSNcNwZ.9FI6tZeDNTZVJdb/NNowfm6', '2025-01-20 14:44:20', NULL),
-(3, 'PeraPeric', '$2y$12$naky8Jr5Owbr8j0QSvSIBOyQTA55si2nSDDed4RGSG5vRsuhXarrK', 'Pera', 'Peric', 'Pera@gmail.com', 'Perina Kuca', 0, NULL, NULL, NULL),
-(4, 'Mikic_Mika', '$2y$12$JOdvm78q7wCif/F5b0pAjumvDarON2SAR3.7c6Ks3UDxvo1/VJqxe', 'Mika', 'Mikic', 'mikinemail@yahoo.com', 'Mikin penthaus 123', 0, NULL, NULL, NULL),
-(5, 'Ana_Anic', '$2y$12$U9fz.6qV6ZJ8TMUiQwJh7emvlog8fI38P9oxd6dHbfxx7qEPSTi0m', 'Ana', 'Anic', 'anaanic@gmail.com', 'PrimerAdrese 123', 0, NULL, NULL, NULL),
-(7, 'Administrator1', '$2y$12$VfsFoXpogYxXa8M7geVySOFMNb3VHHj2ISJ0n71p2hhFAEIEOQEMe', 'Administrator', 'Administratorovic', 'admin@onlinerezervacijaletova.com', 'Admin Adresa 123', 1, NULL, NULL, NULL),
-(9, 'PrimerUgasenog', '$2y$12$MlRCGHi6FyHCK9C0LEJS.uRSMGdC6OEgWoeEKdKsjRnwVgOsUzuV.', 'Ugasen', 'Nalog', 'ugasennalog@yahoo.com', 'Ugasen je btw 123', 0, NULL, NULL, 1);
+INSERT INTO `korisnik` (`ID_Korisnika`, `Korisnicko_Ime`, `Sifra`, `Ime`, `Prezime`, `Email`, `Adresa`, `Uloga`, `Password_Reset_Token`, `Password_Reset_Timestamp`, `Is_Deleted`) VALUES
+(1, 'AleksaK', '$2y$12$MKpYeR2QwaSLrpOWju3qX.cPUidOix4fTyh.lcQw6nQB23H1SenGy', 'Aleksa', 'Karamarkovic', 'aleksa56522@its.edu.rs', 'Adresa 123', 'KORISNIK', NULL, NULL, NULL),
+(2, 'KorisnikNovi', '$2y$12$UJW/wtpBHc6te7B/Xunmv.t1FJyR3VsuoiVcYm3GrMlWqNBdWpDhm', 'Novi', 'Korisnik', 'noviKorisnik@gmail.com', 'Nova Adresa 37', 'KORISNIK', '$2y$12$dA0Q/ksVX4.PIy/V8S.08eJSNcNwZ.9FI6tZeDNTZVJdb/NNowfm6', '2025-01-20 14:44:20', NULL),
+(3, 'PeraPeric', '$2y$12$naky8Jr5Owbr8j0QSvSIBOyQTA55si2nSDDed4RGSG5vRsuhXarrK', 'Pera', 'Peric', 'Pera@gmail.com', 'Perina Kuca', 'KORISNIK', NULL, NULL, NULL),
+(4, 'Mikic_Mika', '$2y$12$JOdvm78q7wCif/F5b0pAjumvDarON2SAR3.7c6Ks3UDxvo1/VJqxe', 'Mika', 'Mikic', 'mikinemail@yahoo.com', 'Mikin penthaus 123', 'KORISNIK', NULL, NULL, NULL),
+(5, 'Ana_Anic', '$2y$12$U9fz.6qV6ZJ8TMUiQwJh7emvlog8fI38P9oxd6dHbfxx7qEPSTi0m', 'Ana', 'Anic', 'anaanic@gmail.com', 'PrimerAdrese 123', 'KORISNIK', NULL, NULL, NULL),
+(7, 'Administrator1', '$2y$12$VfsFoXpogYxXa8M7geVySOFMNb3VHHj2ISJ0n71p2hhFAEIEOQEMe', 'Administrator', 'Administratorovic', 'admin@onlinerezervacijaletova.com', 'Admin Adresa 123', 'ADMIN', NULL, NULL, NULL),
+(9, 'PrimerUgasenog', '$2y$12$MlRCGHi6FyHCK9C0LEJS.uRSMGdC6OEgWoeEKdKsjRnwVgOsUzuV.', 'Ugasen', 'Nalog', 'ugasennalog@yahoo.com', 'Ugasen je btw 123', 'KORISNIK', NULL, NULL, 1),
+(10, 'Menadzer1', '$2y$12$YQ9ueGtfQCxTNdXz3RQeSezbS7cGEqBNpJoVmVzA3fxp7TcDQ6NSO', 'Menadzer', 'Menadzer', 'menadzer@rezervacijaletova.com', 'Menadzer adresa', 'MENADZER', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -387,7 +388,8 @@ INSERT INTO `nalog` (`ID_Naloga`, `Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Ko
 (22, '2025-09-18', 'KL1984', 'KLM', 1, 466),
 (23, '2025-09-28', 'CZ668', 'CSN', 1, 1027),
 (24, '2025-09-25', 'JU260', 'ASL', 5, 770),
-(25, '2025-10-02', 'KL1982', 'KLM', 5, 1480);
+(25, '2025-10-02', 'KL1982', 'KLM', 5, 1480),
+(26, '2025-09-20', 'JU404', 'ASL', 1, 273.8);
 
 -- --------------------------------------------------------
 
@@ -409,8 +411,8 @@ CREATE TABLE `promocija` (
 INSERT INTO `promocija` (`ID`, `Destinacija`, `Tekst`, `Aktivan_Slot`) VALUES
 (1, 'Rim', 'Pogledajte naše ponude letova za srce Italije.', '1'),
 (2, 'Istanbul', 'Pogledajte naše ponude letova za most izmedju Evrope i Azije.', '2'),
-(3, 'London', 'Pogledajte naše ponude letova za London.', NULL),
-(9, 'Amsterdam', 'Pogledajte naše ponude letova za kanale Amsterdama.', '3');
+(3, 'London', 'Pogledajte naše ponude letova za London.', '3'),
+(9, 'Amsterdam', 'Pogledajte naše ponude letova za kanale Amsterdama.', NULL);
 
 -- --------------------------------------------------------
 
@@ -439,6 +441,7 @@ CREATE TABLE `rezervacija` (
 INSERT INTO `rezervacija` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Korisnika`, `Br_Karata`, `Klasa`, `Ime`, `Prezime`, `Adresa`, `Otkazana`, `ID`) VALUES
 ('2025-07-25', 'JU400', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 1),
 ('2025-09-18', 'KL1984', 'KLM', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 15),
+('2025-09-20', 'JU404', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 19),
 ('2025-09-20', 'W64031', 'WZZ', 1, 1, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 4),
 ('2025-09-21', 'JU404', 'ASL', 2, 2, 'Biznis', 'Novi', 'Korisnik', 'Nova Adresa 37', NULL, 12),
 ('2025-09-24', 'W64031', 'WZZ', 5, 3, 'Ekonomija', 'Anin', 'Drugar', 'PrimerAdrese 231', NULL, 10),
@@ -446,7 +449,7 @@ INSERT INTO `rezervacija` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Korisnika
 ('2025-09-25', 'JU400', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 2),
 ('2025-09-25', 'JU400', 'ASL', 3, 3, 'Ekonomija', 'Pera', 'Peric', 'Perina Kuca', 1, 8),
 ('2025-09-27', 'TK1080', 'THY', 2, 5, 'Biznis', 'Novi', 'Korisnik', 'Nova Adresa 37', NULL, 13),
-('2025-09-27', 'TK1080', 'THY', 5, 2, 'Ekonomija', 'Ana', 'Anic', 'PrimerAdrese 123', NULL, 9),
+('2025-09-27', 'TK1080', 'THY', 5, 2, 'Ekonomija', 'Ana', 'Anic', 'PrimerAdrese 123', 1, 9),
 ('2025-09-28', 'CZ668', 'CSN', 1, 1, 'Premium_Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 16),
 ('2025-09-28', 'JU422', 'ASL', 2, 2, 'Biznis', 'Novi', 'Korisnik', 'Druga Adresa 123', 1, 3),
 ('2025-10-01', 'PC374', 'PGT', 4, 2, 'Ekonomija', 'Mika', 'Mikic', 'Mikin penthaus 123', NULL, 11),
@@ -475,6 +478,8 @@ CREATE TABLE `rezervisana_sedista` (
 INSERT INTO `rezervisana_sedista` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Korisnika`, `Br_Sedista`, `Registracija`) VALUES
 ('2025-09-18', 'KL1984', 'KLM', 1, 'A11', 'PH-NXA'),
 ('2025-09-18', 'KL1984', 'KLM', 1, 'A15', 'PH-NXA'),
+('2025-09-20', 'JU404', 'ASL', 1, 'D8', 'YU-APB'),
+('2025-09-20', 'JU404', 'ASL', 1, 'E8', 'YU-APB'),
 ('2025-09-21', 'JU404', 'ASL', 2, 'D1', 'YU-APH'),
 ('2025-09-21', 'JU404', 'ASL', 2, 'F1', 'YU-APH'),
 ('2025-09-24', 'W64031', 'WZZ', 5, 'D13', '9H-WBT'),
@@ -482,8 +487,6 @@ INSERT INTO `rezervisana_sedista` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_K
 ('2025-09-25', 'JU260', 'ASL', 5, 'D1', 'YU-APH'),
 ('2025-09-25', 'JU400', 'ASL', 1, 'A15', 'YU-APH'),
 ('2025-09-25', 'JU400', 'ASL', 1, 'B15', 'YU-APH'),
-('2025-09-27', 'TK1080', 'THY', 5, 'A19', 'TC-LPA'),
-('2025-09-27', 'TK1080', 'THY', 5, 'B19', 'TC-LPA'),
 ('2025-09-28', 'CZ668', 'CSN', 1, 'A26', 'B-1168'),
 ('2025-10-01', 'PC374', 'PGT', 4, 'A16', 'TC-RBB'),
 ('2025-10-01', 'PC374', 'PGT', 4, 'B16', 'TC-RBB'),
@@ -625,7 +628,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('56Ova3Eq06YbIBFVbdhqA5vtSCJIYTdhwiDxRPj2', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiaTZXTE5aQWtMMnUzYnR3dHoxcWloVWF0OWJuTXZQaHkzbENtWVdJbyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9yZXNlcnZhdGlvbi9XNjQwMzEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1748461518);
+('DOT0aKhtbqZll0CpQgK8flbaEeaYMtxS2a35TrLY', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiY3REd09pME5tdkYwQ0k2M0VuWW4yWUJTbkttNWZya1RGbEwwSGg3QyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1750167524);
 
 --
 -- Indexes for dumped tables
@@ -734,7 +737,7 @@ ALTER TABLE `sessions`
 -- AUTO_INCREMENT for table `korisnik`
 --
 ALTER TABLE `korisnik`
-  MODIFY `ID_Korisnika` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_Korisnika` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -746,7 +749,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `nalog`
 --
 ALTER TABLE `nalog`
-  MODIFY `ID_Naloga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `ID_Naloga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `promocija`
@@ -758,7 +761,7 @@ ALTER TABLE `promocija`
 -- AUTO_INCREMENT for table `rezervacija`
 --
 ALTER TABLE `rezervacija`
-  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables

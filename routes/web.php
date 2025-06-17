@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AccountActionsController, AdminController, searchController, AuthenticationController, reservationController};
-use App\Http\Middleware\{loginRequired, adminRequired};
+use App\Http\Controllers\{AccountActionsController, AdminController, searchController, AuthenticationController, ManagerController, reservationController};
+use App\Http\Middleware\{loginRequired, adminRequired, managerRequired};
 use App\Models\Promocija;
 
 //Index ruta, preuzima promocije
@@ -26,42 +26,52 @@ Route::get('/register', function () {
 });
 Route::post('/register', [AuthenticationController::class, 'register']);
 
-//Rute za korake rezervacije
-Route::get('/reservation/{brLeta}', [reservationController::class, 'izaberiLet'])->middleware(loginRequired::class);
-Route::get('/reservation/{brLeta}/{datumPolaska}', [reservationController::class, 'ispisiKlase'])->middleware(loginRequired::class);
-Route::get('/reservation/{brLeta}/{datumPolaska}/{klasa}', [reservationController::class, 'izborKarataSedista'])->middleware(loginRequired::class)->name('izborKarataSedista');
-Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/info', [reservationController::class, 'upisInformacija'])->middleware(loginRequired::class);
-Route::get('/reservation/{brLeta}/{datumPolaska}/{klasa}/info', [reservationController::class, 'upisInformacijaGet'])->middleware(loginRequired::class);
-Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirm', [reservationController::class, 'prikaziPotvrdu'])->middleware(loginRequired::class);
-Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirmed', [reservationController::class, 'napraviRezervaciju'])->middleware(loginRequired::class);
+Route::middleware([loginRequired::class])->group(function () {
+    //Rute za korake rezervacije
+    Route::get('/reservation/{brLeta}', [reservationController::class, 'izaberiLet']);
+    Route::get('/reservation/{brLeta}/{datumPolaska}', [reservationController::class, 'ispisiKlase']);
+    Route::get('/reservation/{brLeta}/{datumPolaska}/{klasa}', [reservationController::class, 'izborKarataSedista'])->name('izborKarataSedista');
+    Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/info', [reservationController::class, 'upisInformacija']);
+    Route::get('/reservation/{brLeta}/{datumPolaska}/{klasa}/info', [reservationController::class, 'upisInformacijaGet']);
+    Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirm', [reservationController::class, 'prikaziPotvrdu']);
+    Route::post('/reservation/{brLeta}/{datumPolaska}/{klasa}/confirmed', [reservationController::class, 'napraviRezervaciju']);
 
-//Rute za korisnicki nalog
-Route::get('/account/dashboard', [AccountActionsController::class, 'stranicaNaloga'])->middleware(loginRequired::class);
-Route::get('/account/reservations', [AccountActionsController::class, 'pregledajRezervacije'])->middleware(loginRequired::class)->name('rezervacije');
-Route::get('/account/edit', [AccountActionsController::class, 'stranicaIzmeni'])->middleware(loginRequired::class)->name('izmene');
-Route::get('/account/delete', [AccountActionsController::class, 'obrisiNalog'])->middleware(loginRequired::class);
-Route::get('/reservation/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [reservationController::class, 'otkaziRezervaciju'])->middleware(loginRequired::class);
-Route::post('/account/edit/base', [AccountActionsController::class, 'izmeniOsnovnePodatke'])->middleware(loginRequired::class);
-Route::post('/account/edit/personal', [AccountActionsController::class, 'izmeniLicnePodatke'])->middleware(loginRequired::class);
-Route::get('/account/edit/resetRequest', [AccountActionsController::class, 'zatraziResetSifre'])->middleware(loginRequired::class);
-Route::post('/account/edit/password', [AccountActionsController::class, 'proveriResetKod'])->middleware(loginRequired::class)->name('promenaSifre');
-Route::get('/account/edit/password', [AccountActionsController::class, 'stranicaPromenaSifre'])->middleware(loginRequired::class)->name('promenaSifre');
-Route::post('/account/edit/password/change', [AccountActionsController::class, 'promeniSifru'])->middleware(loginRequired::class);
+    //Rute za korisnicki nalog
+    Route::get('/account/dashboard', [AccountActionsController::class, 'stranicaNaloga']);
+    Route::get('/account/reservations', [AccountActionsController::class, 'pregledajRezervacije'])->name('rezervacije');
+    Route::get('/account/edit', [AccountActionsController::class, 'stranicaIzmeni'])->name('izmene');
+    Route::get('/account/delete', [AccountActionsController::class, 'obrisiNalog']);
+    Route::get('/reservation/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [reservationController::class, 'otkaziRezervaciju']);
+    Route::post('/account/edit/base', [AccountActionsController::class, 'izmeniOsnovnePodatke']);
+    Route::post('/account/edit/personal', [AccountActionsController::class, 'izmeniLicnePodatke']);
+    Route::get('/account/edit/resetRequest', [AccountActionsController::class, 'zatraziResetSifre']);
+    Route::post('/account/edit/password', [AccountActionsController::class, 'proveriResetKod']);
+    Route::get('/account/edit/password', [AccountActionsController::class, 'stranicaPromenaSifre']);
+    Route::post('/account/edit/password/change', [AccountActionsController::class, 'promeniSifru']);
+});
+
+//Rute za menadzera
+Route::middleware([managerRequired::class])->group(function () {
+    Route::get('/manager/reservations', [ManagerController::class, 'prikaziRezervacije'])->name('adminRezervacije');
+    Route::post('/manager/reservations', [ManagerController::class, 'pretraziRezervacije'])->name('adminRezervacije');
+    Route::get('/manager/reservations/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [ManagerController::class, 'otkaziRezervaciju']);
+    Route::get('/manager/promos', [ManagerController::class, 'upravljajPromocijama'])->name('adminPromocije');
+    Route::post('/manager/promos/new', [ManagerController::class, 'novaPromocija']);
+    Route::post('/manager/promos/change', [ManagerController::class, 'izmeniAktivnePromocije']);
+    Route::get('/manager/promos/delete/{IDpromocije}', [ManagerController::class, 'obrisiPromociju']);
+});
 
 //Rute za administratora
-Route::get('/admin/users', [AdminController::class, 'prikaziKorisnike'])->middleware(adminRequired::class)->name('adminKorisnici');
-Route::post('/admin/users', [AdminController::class, 'pretraziKorisnike'])->middleware(adminRequired::class)->name('adminKorisnici');
-Route::get('/admin/shutDown/{IDKorisnika}', [AdminController::class, 'ugasiNalog'])->middleware(adminRequired::class);
-Route::get('/admin/delete/{IDKorisnika}', [AdminController::class, 'obrisiNalog'])->middleware(adminRequired::class);
-Route::get('/admin/return/{IDKorisnika}', [AdminController::class, 'vratiNalog'])->middleware(adminRequired::class);
-Route::post('/admin/changename/{IDKorisnika}', [AdminController::class, 'promeniIme'])->middleware(adminRequired::class);
-Route::get('/admin/reservations', [AdminController::class, 'prikaziRezervacije'])->middleware(adminRequired::class)->name('adminRezervacije');
-Route::post('admin/reservations', [AdminController::class, 'pretraziRezervacije'])->middleware(adminRequired::class)->name('adminRezervacije');
-Route::get('/admin/reservations/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [AdminController::class, 'otkaziRezervaciju'])->middleware(adminRequired::class);
-Route::get('/admin/promos', [AdminController::class, 'upravljajPromocijama'])->middleware(adminRequired::class)->name('adminPromocije');
-Route::post('/admin/promos/new', [AdminController::class, 'novaPromocija'])->middleware(adminRequired::class);
-Route::post('/admin/promos/change', [AdminController::class, 'izmeniAktivnePromocije'])->middleware(adminRequired::class);
-Route::get('/admin/promos/delete/{IDpromocije}', [AdminController::class, 'obrisiPromociju'])->middleware(adminRequired::class);
+Route::middleware([adminRequired::class])->group(function () {
+    Route::get('/admin/users', [AdminController::class, 'prikaziKorisnike'])->name('adminKorisnici');
+    Route::post('/admin/users', [AdminController::class, 'pretraziKorisnike'])->name('adminKorisnici');
+    Route::get('/admin/shutDown/{IDKorisnika}', [AdminController::class, 'ugasiNalog']);
+    Route::get('/admin/delete/{IDKorisnika}', [AdminController::class, 'obrisiNalog']);
+    Route::get('/admin/return/{IDKorisnika}', [AdminController::class, 'vratiNalog']);
+    Route::post('/admin/changename/{IDKorisnika}', [AdminController::class, 'promeniIme']);
+    Route::get('/admin/noviKorisnik', [AdminController::class, 'noviKorisnik'])->name('adminNoviKorisnik');
+    Route::post('/admin/noviKorisnik', [AdminController::class, 'dodajNovogKorisnika']);
+});
 
 //Rute za jednostavne poruke
 Route::get('/info/registrationSuccess', function(){

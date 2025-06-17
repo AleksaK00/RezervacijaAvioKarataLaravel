@@ -11,15 +11,22 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 lead">
+                            
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('admin/users') ? 'active rounded-3' : ''}}" href="/admin/users">Korisnici</a>
+                                <a class="nav-link {{ Request::is('manager/reservations') ? 'active rounded-3' : ''}}" href="/manager/reservations">Rezervacije</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('admin/reservations') ? 'active rounded-3' : ''}}" href="/admin/reservations">Rezervacije</a>
+                                <a class="nav-link {{ Request::is('manager/promos') ? 'active rounded-3' : ''}}" href="/manager/promos">Promocije</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Request::is('admin/promos') ? 'active rounded-3' : ''}}" href="/admin/promos">Promocije</a>
-                            </li>
+                            @if($userRole == 'ADMIN')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Request::is('admin/users') ? 'active rounded-3' : ''}}" href="/admin/users">Korisnici</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Request::is('admin/noviKorisnik') ? 'active rounded-3' : ''}}" href="/admin/noviKorisnik">Novi korisnik</a>
+                                </li>
+                            @endif
+                            
                         </ul>
                     </div>
                 </div>

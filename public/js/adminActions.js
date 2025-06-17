@@ -39,13 +39,13 @@ function OtkaziIzmenu(ID)
 //Metoda za popunjavanje modala u slucaju klika na opciju otkazi
 function RezervacijaZaBrisanje(brLeta, datumPolaska, IDkorisnika)
 {
-    document.getElementById('otkazi').href = '/admin/reservations/' + brLeta + '/' + datumPolaska + '/' + IDkorisnika + '/cancel'; 
+    document.getElementById('otkazi').href = '/manager/reservations/' + brLeta + '/' + datumPolaska + '/' + IDkorisnika + '/cancel'; 
 }
 
 //Metoda za popunjavanje modala u slucaju klika na opciju obrisi promociju
 function PromocijaZaBrisanje(ID)
 {
-    document.getElementById('dugmeModal').href = '/admin/promos/delete/' + ID;
+    document.getElementById('dugmeModal').href = '/manager/promos/delete/' + ID;
     document.getElementById('dugmeModal').innerHTML = 'Obriši';
     document.getElementById('dugmeModal').className = 'btn btn-danger';
 }
