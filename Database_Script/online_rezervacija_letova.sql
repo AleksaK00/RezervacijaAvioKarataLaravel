@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2025 at 03:40 PM
+-- Generation Time: Jun 19, 2025 at 03:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -125,7 +125,7 @@ CREATE TABLE `instanca_leta` (
 --
 
 INSERT INTO `instanca_leta` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `Registracija`, `Cena_Ekonomija`, `Cena_Premium_Ekonomija`, `Cena_Biznis`, `Benefiti_Ekonomija`, `Benefiti_Premium_Ekonomija`, `Benefiti_Biznis`) VALUES
-('2025-07-25', 'JU400', 'ASL', 'YU-APB', 130, NULL, 720, '- Prijava za let na aerodromu\r\n- Ručni prtljag\r\n- Grickalice\r\n- Prijava za let putem interneta', '', '- Prijava za let na aerodromu\r\n- Prioritetni prolaz na pasoškoj kontroli\r\n- 2 x 32kg\r\n- Ručni prtljag\r\n- Pristup salonu\r\n- Obrok\r\n- Milje\r\n- Prioritetni prtljag\r\n- Prioritetno ukrcavanje\r\n- Prioritetna prijava za let\r\n- Refundacija\r\n- Prijava za let putem interneta '),
+('2025-06-12', 'JU400', 'ASL', 'YU-APB', 130, NULL, 720, '- Prijava za let na aerodromu\r\n- Ručni prtljag\r\n- Grickalice\r\n- Prijava za let putem interneta', '', '- Prijava za let na aerodromu\r\n- Prioritetni prolaz na pasoškoj kontroli\r\n- 2 x 32kg\r\n- Ručni prtljag\r\n- Pristup salonu\r\n- Obrok\r\n- Milje\r\n- Prioritetni prtljag\r\n- Prioritetno ukrcavanje\r\n- Prioritetna prijava za let\r\n- Refundacija\r\n- Prijava za let putem interneta '),
 ('2025-08-17', 'JU426', 'ASL', 'YU-APB', 191.03, NULL, 955.16, '- Prijava za let na aerodromu\r\n- Ručni prtljag\r\n- Grickalice\r\n- Prijava za let putem interneta', '', '- Prijava za let na aerodromu\r\n- Prioritetni prolaz na pasoškoj kontroli\r\n- 2 x 32kg\r\n- Ručni prtljag\r\n- Pristup salonu\r\n- Obrok\r\n- Milje\r\n- Prioritetni prtljag\r\n- Prioritetno ukrcavanje\r\n- Prioritetna prijava za let\r\n- Refundacija\r\n- Prijava za let putem interneta '),
 ('2025-09-18', 'JU404', 'ASL', 'YU-APH', 129.9, NULL, 740, '- Prijava za let na aerodromu\r\n- Ručni prtljag\r\n- Grickalice\r\n- Prijava za let putem interneta', '', '- Prijava za let na aerodromu\r\n- Prioritetni prolaz na pasoškoj kontroli\r\n- 2 x 32kg\r\n- Ručni prtljag\r\n- Pristup salonu\r\n- Obrok\r\n- Milje\r\n- Prioritetni prtljag\r\n- Prioritetno ukrcavanje\r\n- Prioritetna prijava za let\r\n- Refundacija\r\n- Prijava za let putem interneta '),
 ('2025-09-18', 'KL1984', 'KLM', 'PH-NXA', 222, NULL, 770, '- Prijava za let na aerodromu\r\n- Rucni prtljag\r\n- Grickalice\r\n- Prijava za let putem interneta', ' ', '- Prijava za let na aerodromu\r\n- Prioritetni prolaz na pasoškoj kontroli\r\n- 2 x 32kg\r\n- Rucni prtljag\r\n- Pristup salonu\r\n- Obrok\r\n- Milje\r\n- Prioritetni prtljag\r\n- Prioritetno ukrcavanje\r\n- Prioritetna prijava za let\r\n- Refundacija\r\n- Prijava za let putem interneta '),
@@ -377,7 +377,7 @@ INSERT INTO `nalog` (`ID_Naloga`, `Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Ko
 (5, '2025-09-25', 'JU400', 'ASL', 1, 276),
 (7, '2025-09-20', 'W64031', 'WZZ', 1, 110),
 (10, '2025-09-28', 'JU422', 'ASL', 2, 1904),
-(11, '2025-07-25', 'JU400', 'ASL', 1, 260),
+(11, '2025-06-12', 'JU400', 'ASL', 1, 260),
 (15, '2025-09-25', 'JU400', 'ASL', 3, 414),
 (16, '2025-09-27', 'TK1080', 'THY', 5, 470),
 (17, '2025-09-24', 'W64031', 'WZZ', 5, 366.97),
@@ -389,7 +389,9 @@ INSERT INTO `nalog` (`ID_Naloga`, `Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Ko
 (23, '2025-09-28', 'CZ668', 'CSN', 1, 1027),
 (24, '2025-09-25', 'JU260', 'ASL', 5, 770),
 (25, '2025-10-02', 'KL1982', 'KLM', 5, 1480),
-(26, '2025-09-20', 'JU404', 'ASL', 1, 273.8);
+(26, '2025-09-20', 'JU404', 'ASL', 1, 273.8),
+(27, '2025-09-26', 'JU422', 'ASL', 2, 406),
+(28, '2025-10-04', 'W94001', 'WZZ', 2, 297);
 
 -- --------------------------------------------------------
 
@@ -401,18 +403,19 @@ CREATE TABLE `promocija` (
   `ID` int(11) NOT NULL,
   `Destinacija` varchar(32) NOT NULL,
   `Tekst` text NOT NULL,
-  `Aktivan_Slot` set('1','2','3') DEFAULT NULL
+  `Aktivan_Slot` set('1','2','3') DEFAULT NULL,
+  `Broj_Klikova` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `promocija`
 --
 
-INSERT INTO `promocija` (`ID`, `Destinacija`, `Tekst`, `Aktivan_Slot`) VALUES
-(1, 'Rim', 'Pogledajte naše ponude letova za srce Italije.', '1'),
-(2, 'Istanbul', 'Pogledajte naše ponude letova za most izmedju Evrope i Azije.', '2'),
-(3, 'London', 'Pogledajte naše ponude letova za London.', '3'),
-(9, 'Amsterdam', 'Pogledajte naše ponude letova za kanale Amsterdama.', NULL);
+INSERT INTO `promocija` (`ID`, `Destinacija`, `Tekst`, `Aktivan_Slot`, `Broj_Klikova`) VALUES
+(1, 'Rim', 'Pogledajte naše ponude letova za srce Italije.', '1', 1),
+(2, 'Istanbul', 'Pogledajte naše ponude letova za most izmedju Evrope i Azije.', '2', 2),
+(3, 'London', 'Pogledajte naše ponude letova za London.', '3', 1),
+(9, 'Amsterdam', 'Pogledajte naše ponude letova za kanale Amsterdama.', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -430,7 +433,7 @@ CREATE TABLE `rezervacija` (
   `Ime` varchar(30) NOT NULL,
   `Prezime` varchar(30) NOT NULL,
   `Adresa` varchar(120) NOT NULL,
-  `Otkazana` tinyint(1) DEFAULT NULL,
+  `Otkazana` tinyint(1) NOT NULL DEFAULT 0,
   `ID` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -439,22 +442,24 @@ CREATE TABLE `rezervacija` (
 --
 
 INSERT INTO `rezervacija` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_Korisnika`, `Br_Karata`, `Klasa`, `Ime`, `Prezime`, `Adresa`, `Otkazana`, `ID`) VALUES
-('2025-07-25', 'JU400', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 1),
-('2025-09-18', 'KL1984', 'KLM', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 15),
-('2025-09-20', 'JU404', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 19),
-('2025-09-20', 'W64031', 'WZZ', 1, 1, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 4),
-('2025-09-21', 'JU404', 'ASL', 2, 2, 'Biznis', 'Novi', 'Korisnik', 'Nova Adresa 37', NULL, 12),
-('2025-09-24', 'W64031', 'WZZ', 5, 3, 'Ekonomija', 'Anin', 'Drugar', 'PrimerAdrese 231', NULL, 10),
-('2025-09-25', 'JU260', 'ASL', 5, 1, 'Biznis', 'Ana', 'Anic', 'PrimerAdrese 123', NULL, 17),
+('2025-06-12', 'JU400', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 1),
+('2025-09-18', 'KL1984', 'KLM', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 15),
+('2025-09-20', 'JU404', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 19),
+('2025-09-20', 'W64031', 'WZZ', 1, 1, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 4),
+('2025-09-21', 'JU404', 'ASL', 2, 2, 'Biznis', 'Novi', 'Korisnik', 'Nova Adresa 37', 0, 12),
+('2025-09-24', 'W64031', 'WZZ', 5, 3, 'Ekonomija', 'Anin', 'Drugar', 'PrimerAdrese 231', 0, 10),
+('2025-09-25', 'JU260', 'ASL', 5, 1, 'Biznis', 'Ana', 'Anic', 'PrimerAdrese 123', 0, 17),
 ('2025-09-25', 'JU400', 'ASL', 1, 2, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 2),
 ('2025-09-25', 'JU400', 'ASL', 3, 3, 'Ekonomija', 'Pera', 'Peric', 'Perina Kuca', 1, 8),
-('2025-09-27', 'TK1080', 'THY', 2, 5, 'Biznis', 'Novi', 'Korisnik', 'Nova Adresa 37', NULL, 13),
+('2025-09-26', 'JU422', 'ASL', 2, 2, 'Ekonomija', 'Novi', 'Korisnik', 'Nova Adresa 37', 0, 20),
+('2025-09-27', 'TK1080', 'THY', 2, 5, 'Biznis', 'Novi', 'Korisnik', 'Nova Adresa 37', 0, 13),
 ('2025-09-27', 'TK1080', 'THY', 5, 2, 'Ekonomija', 'Ana', 'Anic', 'PrimerAdrese 123', 1, 9),
-('2025-09-28', 'CZ668', 'CSN', 1, 1, 'Premium_Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 16),
+('2025-09-28', 'CZ668', 'CSN', 1, 1, 'Premium_Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 16),
 ('2025-09-28', 'JU422', 'ASL', 2, 2, 'Biznis', 'Novi', 'Korisnik', 'Druga Adresa 123', 1, 3),
-('2025-10-01', 'PC374', 'PGT', 4, 2, 'Ekonomija', 'Mika', 'Mikic', 'Mikin penthaus 123', NULL, 11),
-('2025-10-02', 'KL1982', 'KLM', 5, 2, 'Biznis', 'Ana', 'Anic', 'PrimerAdrese 123', NULL, 18),
-('2025-10-07', 'PC374', 'PGT', 1, 1, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', NULL, 14);
+('2025-10-01', 'PC374', 'PGT', 4, 2, 'Ekonomija', 'Mika', 'Mikic', 'Mikin penthaus 123', 0, 11),
+('2025-10-02', 'KL1982', 'KLM', 5, 2, 'Biznis', 'Ana', 'Anic', 'PrimerAdrese 123', 0, 18),
+('2025-10-04', 'W94001', 'WZZ', 2, 1, 'Ekonomija', 'Novi', 'Korisnik', 'Nova Adresa 37', 0, 21),
+('2025-10-07', 'PC374', 'PGT', 1, 1, 'Ekonomija', 'Aleksa', 'Karamarkovic', 'Adresa 123', 0, 14);
 
 -- --------------------------------------------------------
 
@@ -487,6 +492,8 @@ INSERT INTO `rezervisana_sedista` (`Datum_Polaska`, `Br_Leta`, `ICAO_Kod`, `ID_K
 ('2025-09-25', 'JU260', 'ASL', 5, 'D1', 'YU-APH'),
 ('2025-09-25', 'JU400', 'ASL', 1, 'A15', 'YU-APH'),
 ('2025-09-25', 'JU400', 'ASL', 1, 'B15', 'YU-APH'),
+('2025-09-26', 'JU422', 'ASL', 2, 'A15', 'YU-APH'),
+('2025-09-26', 'JU422', 'ASL', 2, 'B15', 'YU-APH'),
 ('2025-09-28', 'CZ668', 'CSN', 1, 'A26', 'B-1168'),
 ('2025-10-01', 'PC374', 'PGT', 4, 'A16', 'TC-RBB'),
 ('2025-10-01', 'PC374', 'PGT', 4, 'B16', 'TC-RBB'),
@@ -628,7 +635,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('DOT0aKhtbqZll0CpQgK8flbaEeaYMtxS2a35TrLY', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiY3REd09pME5tdkYwQ0k2M0VuWW4yWUJTbkttNWZya1RGbEwwSGg3QyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1750167524);
+('PLwUWT39P0i3NYnpdzuDKT2wDd6IbgPNYLdYszqW', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiOEY5RWZYVUV0Znd1SkJ5TVRaNjcxd3RlbEgzbVFmazVKSDlpSlZ5QyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9pbmZvL2xvZ2luTmVlZGVkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1750337463),
+('s3AXQj0Q8cZkh7D1uaXpc7zB7b9F6o3pH9dieqO7', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiYjdtbGtIM2VCd05BZUFFdzdQSEI2Z295azNwM1M2dkhjVU5yek45cyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9tYW5hZ2VyL2Rhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MTA6ImJyb2pLYXJhdGEiO3M6MToiMSI7czoxNToiaXphYnJhbmFTZWRpc3RhIjthOjA6e31zOjk6ImNlbmFLYXJ0ZSI7czozOiIyOTciO3M6MTE6ImNlbmFEb3BsYXRlIjtzOjE6IjAiO30=', 1750338242),
+('ViebA4U0dMvR3AZU59trEQ1uLWiGE0JX1IBTJ39c', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicUlNQXRBbXZ6STR6Mm9ETmdHb2hYSzBlbzhhQXBlelJMSjg4Q3VXbyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9tYW5hZ2VyL2Rhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1750337463);
 
 --
 -- Indexes for dumped tables
@@ -749,7 +758,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `nalog`
 --
 ALTER TABLE `nalog`
-  MODIFY `ID_Naloga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ID_Naloga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `promocija`
@@ -761,7 +770,7 @@ ALTER TABLE `promocija`
 -- AUTO_INCREMENT for table `rezervacija`
 --
 ALTER TABLE `rezervacija`
-  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
