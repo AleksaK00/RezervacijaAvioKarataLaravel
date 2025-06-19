@@ -13,6 +13,9 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 lead">
                             
                             <li class="nav-item">
+                                <a class="nav-link {{ Request::is('manager/dashboard') ? 'active rounded-3' : ''}}" href="/manager/dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ Request::is('manager/reservations') ? 'active rounded-3' : ''}}" href="/manager/reservations">Rezervacije</a>
                             </li>
                             <li class="nav-item">

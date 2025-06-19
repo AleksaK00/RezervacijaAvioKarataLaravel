@@ -22,8 +22,9 @@
                         <div class="carousel-captionTopText d-none d-md-block">
                             <h4 onclick="PretragaPromo('formaCarousel1')">Beograd - {{$promocije[0]['Destinacija']}}</h4>
                             <p onclick="PretragaPromo('formaCarousel1')">{{ $promocije[0]['Tekst'] }}</p>
-                            <form method="post" action="" name="formaCarousel1">
+                            <form method="post" action="/search" name="formaCarousel1">
                                 @csrf
+                                <input type="hidden" name="promocijaId" value="{{ $promocije[0]['ID'] }}">
                                 <input type="hidden" name="polazniAerodrom" value="Beograd">
                                 <input type="hidden" name="dolazniAerodrom" value="{{$promocije[0]['Destinacija']}}">
                             </form>
@@ -35,8 +36,9 @@
                         <div class="carousel-caption d-none d-md-block">
                             <h4 onclick="PretragaPromo('formaCarousel2')">Beograd - {{$promocije[1]['Destinacija']}}</h4>
                             <p onclick="PretragaPromo('formaCarousel2')">{{ $promocije[1]['Tekst'] }}</p>
-                            <form method="post" action="" name="formaCarousel2">
+                            <form method="post" action="/search" name="formaCarousel2">
                                 @csrf
+                                <input type="hidden" name="promocijaId" value="{{ $promocije[1]['ID'] }}">
                                 <input type="hidden" name="polazniAerodrom" value="Beograd">
                                 <input type="hidden" name="dolazniAerodrom" value="{{$promocije[1]['Destinacija']}}">
                             </form>
@@ -48,8 +50,9 @@
                         <div class="carousel-caption d-none d-md-block">
                             <h4 onclick="PretragaPromo('formaCarousel3')">Beograd - {{$promocije[2]['Destinacija']}}</h4>
                             <p onclick="PretragaPromo('formaCarousel3')">{{ $promocije[2]['Tekst'] }}</p>
-                            <form method="post" action="" name="formaCarousel3">
+                            <form method="post" action="/search" name="formaCarousel3">
                                 @csrf
+                                <input type="hidden" name="promocijaId" value="{{ $promocije[2]['ID'] }}">
                                 <input type="hidden" name="polazniAerodrom" value="Beograd">
                                 <input type="hidden" name="dolazniAerodrom" value="{{$promocije[2]['Destinacija']}}">
                             </form>

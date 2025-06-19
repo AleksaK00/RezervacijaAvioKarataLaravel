@@ -52,6 +52,7 @@ Route::middleware([loginRequired::class])->group(function () {
 
 //Rute za menadzera
 Route::middleware([managerRequired::class])->group(function () {
+    Route::get('/manager/dashboard', [ManagerController::class, 'prikaziDashboard']);
     Route::get('/manager/reservations', [ManagerController::class, 'prikaziRezervacije'])->name('adminRezervacije');
     Route::post('/manager/reservations', [ManagerController::class, 'pretraziRezervacije'])->name('adminRezervacije');
     Route::get('/manager/reservations/{brLeta}/{datumPolaska}/{IDkorisnika}/cancel', [ManagerController::class, 'otkaziRezervaciju']);

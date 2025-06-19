@@ -7,9 +7,58 @@ use App\Models\{Rezervacija, Korisnik, RezervisanaSedista, Promocija};
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Database\Query\JoinClause;
 
 class ManagerController extends Controller
 {
+    //Metoda koja prikazuje dashboard menadzera sa nekim korisnim informacijama o radu biznisa
+    function prikaziDashboard()
+    {
+        //Broj ispunjenih i neispunjenih rezervacija
+        $brojIspunjenihRezervacija = Rezervacija::where('Otkazana', 0)->where('Datum_Polaska', '<', Carbon::now())->count();
+        $brojBuducihRezervacija = Rezervacija::where('Otkazana', 0)->where('Datum_Polaska', '>=', Carbon::now())->count();
+
+        //Racunanje prihoda
+        $prihod = Rezervacija::where('Otkazana', 0)->where('rezervacija.Datum_Polaska', '<', Carbon::now())->join('nalog', function (JoinClause $join)
+            {
+                $join->on('rezervacija.ID_Korisnika', '=', 'nalog.ID_Korisnika')->on('rezervacija.Br_Leta', '=', 'nalog.Br_Leta')->on('rezervacija.Datum_Polaska', '=', 'nalog.Datum_Polaska');
+            })->sum('nalog.Iznos') * 0.10;
+        $prihodNeizvrsenih = Rezervacija::where('Otkazana', 0)->where('rezervacija.Datum_Polaska', '>=', Carbon::now())->join('nalog', function (JoinClause $join)
+            {
+                $join->on('rezervacija.ID_Korisnika', '=', 'nalog.ID_Korisnika')->on('rezervacija.Br_Leta', '=', 'nalog.Br_Leta')->on('rezervacija.Datum_Polaska', '=', 'nalog.Datum_Polaska');
+            })->sum('nalog.Iznos') * 0.10;
+
+        //Broj klikova na promocije
+        $brojKlikova = Promocija::sum('Broj_Klikova');
+
+        //Informacije za popunjavanje grafikona a prihodu us sledeca tri meseca
+        Carbon::setLocale('sr');
+        $sledecaTriMeseca = [
+            'mesec' => [],
+            'ocekivaniPrihod' => []
+        ];
+        for ($i = 0; $i < 4; $i++) {
+            $mesec = Carbon::now()->addMonths($i);
+            $sledecaTriMeseca['mesec'][] = $mesec->translatedFormat('F');
+            $sledecaTriMeseca['ocekivaniPrihod'][] = Rezervacija::where('Otkazana', 0)
+                ->where('rezervacija.Datum_Polaska', '>=', $mesec->copy()->startOfMonth())
+                ->where('rezervacija.Datum_Polaska', '<=', $mesec->copy()->endOfMonth())
+                ->join('nalog', function (JoinClause $join)
+                {
+                    $join->on('rezervacija.ID_Korisnika', '=', 'nalog.ID_Korisnika')->on('rezervacija.Br_Leta', '=', 'nalog.Br_Leta')->on('rezervacija.Datum_Polaska', '=', 'nalog.Datum_Polaska');
+                })->sum('nalog.Iznos') * 0.10;
+        }
+
+        return view('manager.dashboard', [
+            'brojKlikova' => $brojKlikova, 
+            'brojIspunjenihRezervacija' => $brojIspunjenihRezervacija, 
+            'brojBuducihRezervacija' => $brojBuducihRezervacija,
+            'prihod' => $prihod,
+            'prihodNeizvrsenih' => $prihodNeizvrsenih,
+            'sledecaTriMeseca' => $sledecaTriMeseca
+        ]);
+    }
+
     //Metoda koja prikazuje sve rezervacije i korisnicko ime rezervacije
     function prikaziRezervacije()
     {
@@ -42,7 +91,6 @@ class ManagerController extends Controller
 
         return view('manager.reservations', ['rezervacije' => $rezervacije]);
     }
-
     
     //Metoda koja otkazuje zadatu rezervaciju
     function otkaziRezervaciju($brLeta, $datumPolaska , $IDkorisnika)

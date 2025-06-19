@@ -17,6 +17,7 @@
                 <th>Destinacija</th>
                 <th>Tekst</th>
                 <th>Aktivan slot</th>
+                <th>Klikovi</th>
                 <th></th>
             </tr>
 
@@ -27,6 +28,7 @@
                     <td>{{ $promocija['Destinacija'] }}</td>
                     <td>{{ $promocija['Tekst'] }}</td>
                     <td>{{ $promocija['Aktivan_Slot'] }}</td>
+                    <td>{{ $promocija['Broj_Klikova'] }}</td>
                     <td>
                         {{-- Dugme za brisanje promocije uz potvrdu iz modala --}}
                         <button class="btn btn-secondary {{ $promocija['Aktivan_Slot'] > 0 ? 'disabled' : ''}}" type="button" data-bs-toggle="modal" data-bs-target="#potvrdaBrisanja" 

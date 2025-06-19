@@ -29,7 +29,7 @@ class AccountActionsController extends Controller
         }
         if ($this->korisnik['Uloga'] == 'MENADZER')
         {
-            return redirect('/manager/reservations');
+            return redirect('/manager/dashboard');
         }
         else
         {

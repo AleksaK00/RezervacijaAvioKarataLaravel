@@ -20,10 +20,17 @@ class searchController extends Controller
         ], $messages = [
             'required' => 'Unesite polaznu i dolaznu destinaciju!'
         ]);
-
         if ($validacija->fails())
         {
             return redirect('/')->withErrors('Unesite destinacije za pretragu letova!');
+        }
+
+        //Proverava da li korisnik vrsi pretragu preko promocije i povecava counter za klikove promocije.
+        if ($request->input('promocijaId'))
+        {
+            $promocija = Promocija::find($request->input('promocijaId'));
+            $promocija['Broj_Klikova'] += 1;
+            $promocija->save();
         }
 
         // Nalazenje svih aerodroma u polaznom i dolaznom gradu
@@ -42,7 +49,6 @@ class searchController extends Controller
             foreach ($dolazniAerodromi as $trenutniDolazni)
             {
                 $pretraga->podaciZaFilter['dolazniAerodromi'][] = $trenutniDolazni["Ime"];
-
                 $rezultat = Let::where('Polazni_Aerodrom', 'LIKE', '%'.$trenutniPolazni["ICAO_Kod_Aerodroma"].'%')->where('Dolazni_Aerodrom', 'LIKE', '%'.$trenutniDolazni["ICAO_Kod_Aerodroma"].'%')->get();
 
                 foreach ($rezultat as $trenutniLet)
