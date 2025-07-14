@@ -67,8 +67,6 @@
 
                 <ul class="nav col-md-4 justify-content-end">
                     <li class="nav-item"><a href="/" class="px-2 link-dark link-underline-opacity-0 link-underline-opacity-75-hover">Početna</a></li>
-                    <li class="nav-item"><a href="#" class="px-2 link-dark link-underline-opacity-0 link-underline-opacity-75-hover">FAQ</a></li> <!-- Implementiraj FAQ stranicu -->
-                    <li class="nav-item"><a href="#" class="px-2 link-dark link-underline-opacity-0 link-underline-opacity-75-hover">O nama</a></li> <!-- Implementiraj About stranicu -->
                 </ul>
             </div>
 
