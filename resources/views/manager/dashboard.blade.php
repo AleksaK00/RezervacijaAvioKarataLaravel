@@ -2,7 +2,7 @@
     
     <h2 class="display-5 text-center">Dashboard</h2>
 
-   <div class="container-fluid p-1 mt-5">
+    <div class="container-fluid p-1 mt-5">
         <div class="row g-3">
 
             <div class="col-md-6">
@@ -33,23 +33,23 @@
         </div>
     </div>
 
-    {{-- Kanvas sa upisanim rezervacijama --}}
+    {{-- Grafikon(kanvas) sa očekivanim prihodom --}}
     <canvas id="dashboardChart"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    const ctx = document.getElementById('dashboardChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: @json($sledecaTriMeseca['mesec']),
-            datasets: [{
-                label: 'Rezervacije',
-                data: @json($sledecaTriMeseca['ocekivaniPrihod']),
-                borderColor: '#ff6600',
-                backgroundColor: 'rgba(255,102,0,0.1)',
-            }]
-        }
-    });
-</script>
+        const ctx = document.getElementById('dashboardChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($sledecaTriMeseca['mesec']),
+                datasets: [{
+                    label: 'Rezervacije',
+                    data: @json($sledecaTriMeseca['ocekivaniPrihod']),
+                    borderColor: '#ff6600',
+                    backgroundColor: 'rgba(255,102,0,0.1)',
+                }]
+            }
+        });
+    </script>
 
 </x-adminLayout>

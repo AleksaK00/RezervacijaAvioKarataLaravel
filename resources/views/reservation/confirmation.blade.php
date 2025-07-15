@@ -39,7 +39,7 @@
                             <td>{{ Number::currency((Request::session()->get('cenaKarte') * Request::session()->get('brojKarata')), in: 'EUR', locale: 'de')  }}</td>
                         </tr>
                         <tr>
-                            <td class="text-primary">Izabrana Sedista: </td>
+                            <td class="text-primary">Izabrana Sedišta: </td>
                             <td>
                                 @foreach (Request::session()->get('izabranaSedista') as $sediste)
                                     @if ($sediste != "")
