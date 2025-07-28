@@ -122,7 +122,7 @@ class ManagerController extends Controller
         $validacija = Validator::make($request->all(), [
             'destinacijaUnos' => 'required',
             'tekstUnos' => 'required',
-            'slikaUnos' => 'required|mimes:jpg'
+            'slikaUnos' => 'required|mimes:jpg',
         ], $messages = [
             'required' => 'Sva polja su obavezna!',
             'mimes' => 'slika mora da bude JPG'
@@ -144,7 +144,8 @@ class ManagerController extends Controller
             $novaPromocija = Promocija::create([
                 'Destinacija' => $request->input('destinacijaUnos'),
                 'Tekst' => $request->input('tekstUnos'),
-                'Aktivan_Slot' => NULL
+                'Aktivan_Slot' => NULL,
+                'Broj_Klikova' => 0
             ]);
 
             //prebacivanje slike u folder public/images/Promo
