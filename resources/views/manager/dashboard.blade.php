@@ -27,7 +27,7 @@
                 <div class="p-2 display-6 text-center border border-primary rounded-3">Klikova na promocije:<br> <span class="text-primary">{{ $brojKlikova }}</span></div>
             </div>
             <div class="col-md-6">
-                <div class="p-2 display-6 text-center border border-primary rounded-3">Broj rezervacija:<br> <span class="text-primary">6</span></div>
+                <div class="p-2 display-6 text-center border border-primary rounded-3">Broj promocija:<br> <span class="text-primary">{{ $brojPromocija }}</span></div>
             </div>
 
         </div>

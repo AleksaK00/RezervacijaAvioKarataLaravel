@@ -28,7 +28,8 @@ class ManagerController extends Controller
                 $join->on('rezervacija.ID_Korisnika', '=', 'nalog.ID_Korisnika')->on('rezervacija.Br_Leta', '=', 'nalog.Br_Leta')->on('rezervacija.Datum_Polaska', '=', 'nalog.Datum_Polaska');
             })->sum('nalog.Iznos') * 0.10;
 
-        //Broj klikova na promocije
+        //Broj klikova na promocije i broj promocija
+        $brojPromocija = Promocija::count();
         $brojKlikova = Promocija::sum('Broj_Klikova');
 
         //Informacije za popunjavanje grafikona a prihodu us sledeca tri meseca
@@ -55,7 +56,8 @@ class ManagerController extends Controller
             'brojBuducihRezervacija' => $brojBuducihRezervacija,
             'prihod' => $prihod,
             'prihodNeizvrsenih' => $prihodNeizvrsenih,
-            'sledecaTriMeseca' => $sledecaTriMeseca
+            'sledecaTriMeseca' => $sledecaTriMeseca,
+            'brojPromocija' => $brojPromocija
         ]);
     }
 
